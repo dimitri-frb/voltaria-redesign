@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Voltaria — Le prochain fleuron du génie électrique français</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  :root {
+    --bg: #fafaf7;
+    --bg-2: #f3f1ea;
+    --paper: #ffffff;
+    --ink: #131313;
+    --ink-2: #4a4a4a;
+    --ink-3: #7a7a7a;
+    --line: #e8e3d6;
+    --line-strong: #d4cebd;
+    --gold: #a48543;
+    --gold-soft: #c4a86a;
+  }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+    font-weight: 400;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+  .serif { font-family: 'Cormorant Garamond', Georgia, serif; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+  .container-wide { max-width: 1360px; margin: 0 auto; padding: 0 32px; }
+
+  /* Nav — refined hairline */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 80;
+    background: rgba(250,250,247,0.85);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s ease, background 0.3s ease;
+  }
+  .nav.scrolled { border-bottom-color: var(--line); background: rgba(250,250,247,0.96); }
+  .nav .row {
+    max-width: 1360px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 22px 32px;
+  }
+  .logo {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 26px; font-weight: 500;
+    letter-spacing: 0;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .logo svg { width: 20px; height: 20px; }
+  .logo svg path { fill: var(--gold); }
+  .logo .dot { color: var(--gold); }
+  .nav ul { list-style: none; display: flex; gap: 36px; font-size: 13px; }
+  .nav ul a { color: var(--ink-2); position: relative; padding: 4px 0; }
+  .nav ul a::after {
+    content: ""; position: absolute; left: 0; bottom: 0;
+    width: 0; height: 1px; background: var(--gold);
+    transition: width 0.25s ease;
+  }
+  .nav ul a:hover { color: var(--ink); }
+  .nav ul a:hover::after { width: 100%; }
+  .nav .cta {
+    font-size: 13px; font-weight: 500;
+    color: var(--ink);
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--ink);
+  }
+  .nav .cta:hover { color: var(--gold); border-bottom-color: var(--gold); }
+  @media (max-width: 900px) { .nav ul { display: none; } }
+
+  /* Hero — airy editorial */
+  .hero {
+    padding: 160px 0 100px;
+    position: relative;
+  }
+  .hero .meta {
+    font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--ink-3); margin-bottom: 48px;
+    display: flex; gap: 16px; align-items: center;
+  }
+  .hero .meta::before { content: ""; width: 30px; height: 1px; background: var(--gold); }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(56px, 9vw, 132px);
+    font-weight: 400;
+    letter-spacing: -0.025em;
+    line-height: 0.95;
+    margin-bottom: 60px;
+    max-width: 1100px;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold); font-weight: 500; }
+  .hero .row-h {
+    display: grid; grid-template-columns: 1.4fr 1fr; gap: 60px; align-items: end;
+    padding-top: 40px;
+    border-top: 1px solid var(--line);
+  }
+  @media (max-width: 900px) { .hero .row-h { grid-template-columns: 1fr; gap: 24px; } }
+  .hero .sub {
+    font-size: 18px; color: var(--ink-2);
+    max-width: 540px; line-height: 1.65;
+    font-weight: 300;
+  }
+  .hero .actions { display: flex; gap: 14px; flex-wrap: wrap; padding-top: 12px; }
+  .btn {
+    padding: 14px 30px;
+    font-size: 13px; font-weight: 500;
+    letter-spacing: 0.04em;
+    border: 1px solid transparent;
+    transition: all 0.25s ease;
+    display: inline-flex; align-items: center; gap: 10px;
+    border-radius: 0;
+  }
+  .btn-primary { background: var(--ink); color: var(--bg); }
+  .btn-primary:hover { background: var(--gold); }
+  .btn-ghost { background: transparent; color: var(--ink); border-color: var(--ink); }
+  .btn-ghost:hover { background: var(--ink); color: var(--bg); }
+
+  .hero .scroll-note {
+    margin-top: 80px;
+    font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase;
+    color: var(--ink-3);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero .scroll-note::before { content: ""; width: 40px; height: 1px; background: var(--ink-3); }
+
+  /* Section base */
+  section.s { padding: 140px 0; border-top: 1px solid var(--line); }
+  .eyebrow {
+    font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 18px;
+    display: inline-flex; align-items: center; gap: 14px;
+  }
+  .eyebrow::before { content: ""; width: 24px; height: 1px; background: var(--gold); }
+  .h2 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(38px, 5vw, 68px);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+  }
+  .h2 em { font-style: italic; color: var(--gold); }
+  .lede { font-size: 17px; color: var(--ink-2); max-width: 540px; margin-top: 18px; line-height: 1.7; font-weight: 300; }
+
+  /* Histoire */
+  .histoire .grid {
+    display: grid; grid-template-columns: 1.2fr 1fr;
+    gap: 100px; align-items: start;
+  }
+  @media (max-width: 900px) { .histoire .grid { grid-template-columns: 1fr; gap: 64px; } }
+  .histoire .copy p { color: var(--ink-2); font-size: 17px; line-height: 1.8; margin-top: 24px; font-weight: 300; }
+  .histoire .pillars { margin-top: 48px; display: grid; gap: 0; }
+  .histoire .pillar {
+    padding: 28px 0;
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 24px;
+    align-items: baseline;
+  }
+  .histoire .pillar:last-child { border-bottom: 1px solid var(--line); }
+  .histoire .pillar h4 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    font-size: 26px;
+    color: var(--gold);
+    font-weight: 400;
+  }
+  .histoire .pillar p { color: var(--ink-2); font-size: 14px; line-height: 1.65; }
+
+  .founders { display: grid; gap: 16px; position: sticky; top: 100px; }
+  .founder {
+    background: var(--paper);
+    overflow: hidden;
+    transition: transform 0.4s ease;
+  }
+  .founder:hover { transform: translateY(-3px); }
+  .founder .img {
+    aspect-ratio: 4/5;
+    background-size: cover; background-position: center top;
+    filter: grayscale(15%);
+    transition: filter 0.5s ease;
+  }
+  .founder:hover .img { filter: grayscale(0%); }
+  .founder .img.scott { background-image: url('img/scott.webp'); }
+  .founder .img.ambroise { background-image: url('img/ambroise.webp'); }
+  .founder .b { padding: 18px 4px; border-top: 1px solid var(--line); }
+  .founder .n { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 22px; font-weight: 500; letter-spacing: -0.01em; }
+  .founder .r { color: var(--gold); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; margin-top: 4px; }
+
+  /* Métiers */
+  .metiers .head {
+    display: grid; grid-template-columns: 1fr 1.4fr;
+    gap: 60px; margin-bottom: 80px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--line);
+  }
+  @media (max-width: 900px) { .metiers .head { grid-template-columns: 1fr; gap: 24px; } }
+  .metiers-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0 60px; }
+  @media (max-width: 700px) { .metiers-list { grid-template-columns: 1fr; gap: 0; } }
+  .metier {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 60px 1fr 40px;
+    gap: 16px;
+    align-items: baseline;
+    cursor: pointer;
+    transition: padding-left 0.3s ease;
+  }
+  .metier:hover { padding-left: 12px; }
+  .metier:hover .title { color: var(--gold); }
+  .metier:hover .arr { color: var(--gold); transform: translateX(4px); }
+  .metier .num {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    font-size: 24px;
+    color: var(--gold);
+  }
+  .metier .title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 26px; font-weight: 400;
+    transition: color 0.3s ease;
+  }
+  .metier .desc {
+    font-size: 13px; color: var(--ink-3);
+    margin-top: 8px; line-height: 1.55;
+    grid-column: 2 / 3;
+  }
+  .metier .arr {
+    font-size: 16px; color: var(--ink); justify-self: end;
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+
+  /* Réseau */
+  .reseau { background: var(--bg-2); }
+  .reseau .head {
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px;
+    align-items: end; margin-bottom: 64px;
+  }
+  @media (max-width: 800px) { .reseau .head { grid-template-columns: 1fr; } }
+  .reseau .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line-strong);
+    border: 1px solid var(--line-strong);
+  }
+  @media (max-width: 1000px) { .reseau .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .reseau .grid { grid-template-columns: 1fr; } }
+  .company {
+    background: var(--bg-2);
+    padding: 32px 28px;
+    min-height: 220px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    transition: background 0.3s ease;
+    cursor: pointer;
+  }
+  .company:hover { background: var(--paper); }
+  .company .city {
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold);
+  }
+  .company .name {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 26px; font-weight: 500;
+    letter-spacing: -0.01em; margin-top: 12px;
+    line-height: 1.15;
+  }
+  .company .desc {
+    color: var(--ink-3); font-size: 13px;
+    margin-top: 10px; line-height: 1.5;
+  }
+  .company .stats {
+    display: flex; gap: 18px;
+    margin-top: 24px; padding-top: 14px;
+    border-top: 1px solid var(--line);
+    font-size: 12px; color: var(--ink-3);
+  }
+  .company .stats b {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 18px; font-weight: 500;
+    color: var(--ink); margin-right: 4px;
+  }
+
+  /* ITW */
+  .itw .head {
+    display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px;
+    align-items: end; margin-bottom: 64px;
+  }
+  @media (max-width: 800px) { .itw .head { grid-template-columns: 1fr; } }
+  .itw .grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 900px) { .itw .grid { grid-template-columns: 1fr; } }
+  .itw-card {
+    border-top: 1px solid var(--ink);
+    padding-top: 24px;
+    display: flex; flex-direction: column;
+    transition: padding-top 0.3s ease;
+  }
+  .itw-card:hover { padding-top: 16px; }
+  .itw-card:hover .img { filter: grayscale(0%); }
+  .itw-card .img {
+    aspect-ratio: 4/3;
+    background-size: cover; background-position: center;
+    filter: grayscale(10%);
+    transition: filter 0.4s ease;
+    margin-bottom: 24px;
+  }
+  .itw-card .q {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--ink);
+    flex: 1;
+  }
+  .itw-card .q::before { content: "« "; color: var(--gold); }
+  .itw-card .q::after { content: " »"; color: var(--gold); }
+  .itw-card .who { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; }
+  .itw-card .n { font-size: 14px; font-weight: 500; }
+  .itw-card .r { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
+  .itw-card .link { color: var(--gold); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; }
+  .img-1 { background-image: url('https://images.unsplash.com/photo-1560250097-0b93528c311a?w=1200&q=85'); }
+  .img-2 { background-image: url('https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=1200&q=85'); }
+  .img-3 { background-image: url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=1200&q=85'); }
+
+  /* Chiffres */
+  .chiffres { background: var(--bg); }
+  .chiffres .head { text-align: center; max-width: 720px; margin: 0 auto 80px; }
+  .chiffres .eyebrow { justify-content: center; }
+  .chiffres .eyebrow::before, .chiffres .eyebrow::after { content: ""; width: 24px; height: 1px; background: var(--gold); }
+  .num-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @media (max-width: 800px) { .num-grid { grid-template-columns: repeat(2, 1fr); gap: 24px 0; } }
+  .num-cell {
+    padding: 0 28px;
+    border-right: 1px solid var(--line);
+    text-align: center;
+  }
+  .num-cell:last-child { border-right: none; }
+  @media (max-width: 800px) { .num-cell:nth-child(2) { border-right: none; } }
+  .num-cell .v {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(64px, 7.5vw, 112px);
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .num-cell .v sup { font-size: 0.42em; vertical-align: top; opacity: 0.6; margin-left: 2px; color: var(--gold); }
+  .num-cell .l { font-size: 13px; color: var(--ink-3); margin-top: 18px; max-width: 200px; margin-left: auto; margin-right: auto; }
+
+  /* Nous rejoindre */
+  .rejoindre { background: var(--ink); color: var(--bg); padding: 160px 0; border-top: 0; }
+  .rejoindre .head { text-align: center; max-width: 800px; margin: 0 auto 64px; }
+  .rejoindre .eyebrow { justify-content: center; color: var(--gold-soft); }
+  .rejoindre .eyebrow::before, .rejoindre .eyebrow::after { content: ""; width: 24px; height: 1px; background: var(--gold-soft); }
+  .rejoindre h2 em { color: var(--gold-soft); }
+  .rejoindre .lede { color: rgba(250,250,247,0.7); margin-left: auto; margin-right: auto; }
+  .rejoindre .paths {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+    background: rgba(250,250,247,0.15);
+    border: 1px solid rgba(250,250,247,0.15);
+    max-width: 1000px; margin: 0 auto;
+  }
+  @media (max-width: 800px) { .rejoindre .paths { grid-template-columns: 1fr; } }
+  .path {
+    background: var(--ink);
+    padding: 48px 36px;
+    display: flex; flex-direction: column;
+    transition: background 0.3s ease;
+  }
+  .path:hover { background: #0a0a0a; }
+  .path .e {
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--gold-soft);
+  }
+  .path .l {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 32px; font-weight: 400;
+    letter-spacing: -0.01em; margin-top: 14px;
+    line-height: 1.1;
+  }
+  .path .s { color: rgba(250,250,247,0.7); font-size: 14px; margin-top: 16px; line-height: 1.6; flex: 1; }
+  .path .arr {
+    color: var(--gold-soft); font-size: 13px;
+    letter-spacing: 0.04em;
+    margin-top: 32px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(250,250,247,0.18);
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+
+  /* Footer */
+  footer.foot { background: var(--bg); color: var(--ink-2); padding: 60px 0 32px; border-top: 1px solid var(--line); }
+  .foot-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px; padding-top: 32px;
+  }
+  @media (max-width: 800px) { .foot-grid { grid-template-columns: 1fr 1fr; } }
+  .foot-grid h5 { color: var(--ink); font-size: 12px; font-weight: 500; margin-bottom: 18px; letter-spacing: 0.16em; text-transform: uppercase; }
+  .foot-grid ul { list-style: none; }
+  .foot-grid li { font-size: 13px; margin-bottom: 10px; }
+  .foot-grid a:hover { color: var(--gold); }
+  .foot-grid .b-name {
+    color: var(--ink); font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 28px; font-weight: 500; margin-bottom: 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .foot-grid .b-name svg { width: 22px; height: 22px; }
+  .foot-grid .b-name svg path { fill: var(--gold); }
+  .foot-grid p { font-size: 14px; line-height: 1.65; max-width: 340px; }
+  .foot-bottom {
+    padding-top: 24px; margin-top: 40px;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; gap: 12px;
+    font-size: 12px; flex-wrap: wrap;
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="row">
+    <a class="logo" href="#top">
+      <svg viewBox="0 0 32 32" fill="none" aria-hidden><path d="M6 3L20 3L14 14H24L10 29L14 18H4L6 3Z"/></svg>
+      Voltaria
+    </a>
+    <ul>
+      <li><a href="#histoire">L'histoire</a></li>
+      <li><a href="#metiers">Nos métiers</a></li>
+      <li><a href="#reseau">Le réseau</a></li>
+      <li><a href="#itw">Dirigeants</a></li>
+      <li><a href="#chiffres">Chiffres</a></li>
+    </ul>
+    <a class="cta" href="#rejoindre">Nous rejoindre →</a>
+  </div>
+</header>
+
+<section id="top" class="hero container-wide">
+  <div class="meta">Holding du génie électrique français · Depuis 2024</div>
+  <h1>Le prochain<br/><em>fleuron</em> du génie<br/>électrique français.</h1>
+  <div class="row-h">
+    <p class="sub">Voltaria fédère, préserve et accélère les PME françaises engagées dans la transition énergétique. Sans en effacer ni le nom, ni l'âme.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="#histoire">Découvrir →</a>
+      <a class="btn btn-ghost" href="#rejoindre">Nous rejoindre</a>
+    </div>
+  </div>
+  <div class="scroll-note">Faites défiler</div>
+</section>
+
+<section class="s histoire" id="histoire">
+  <div class="container">
+    <div class="grid">
+      <div class="copy">
+        <div class="eyebrow">L'histoire · La mission</div>
+        <h2 class="h2">Un projet <em>industriel</em><br/>au service de la transition.</h2>
+        <p>Voltaria s'associe, fédère et développe des sociétés du génie électrique français engagées dans la transition énergétique.</p>
+        <p>Plutôt que de construire depuis zéro, nous nous appuyons sur des entreprises éprouvées — leurs équipes, leurs marques, leurs clients historiques — pour bâtir ensemble un acteur de référence.</p>
+        <div class="pillars">
+          <div class="pillar"><h4>Fédérer</h4><p>Réunir les PME du génie électrique dans une communauté entrepreneuriale durable.</p></div>
+          <div class="pillar"><h4>Préserver</h4><p>Garder intacts l'ADN, les marques et les équipes qui font la singularité de chaque société.</p></div>
+          <div class="pillar"><h4>Accélérer</h4><p>Apporter aux dirigeants les ressources financières et humaines pour franchir un nouveau cap.</p></div>
+        </div>
+      </div>
+      <div class="founders">
+        <div class="founder">
+          <div class="img scott"></div>
+          <div class="b"><div class="n">Scott Gordon</div><div class="r">Président</div></div>
+        </div>
+        <div class="founder">
+          <div class="img ambroise"></div>
+          <div class="b"><div class="n">Ambroise Nugues</div><div class="r">Directeur Général</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="s metiers" id="metiers">
+  <div class="container">
+    <div class="head">
+      <div>
+        <div class="eyebrow">Nos métiers</div>
+        <h2 class="h2">Six savoir-faire,<br/>une <em>filière</em>.</h2>
+      </div>
+      <p class="lede">Les entreprises du réseau Voltaria couvrent l'ensemble de la chaîne du génie électrique français — du bureau d'études à la maintenance long terme.</p>
+    </div>
+    <div class="metiers-list">
+      <div class="metier"><div class="num">01</div><div><div class="title">Installations & courants forts</div><div class="desc">Tableaux, distribution, mise aux normes pour le résidentiel, le tertiaire et l'industrie.</div></div><div class="arr">→</div></div>
+      <div class="metier"><div class="num">02</div><div><div class="title">Génie électrique industriel</div><div class="desc">Process, automatismes, courants faibles. Sites de production et data centers.</div></div><div class="arr">→</div></div>
+      <div class="metier"><div class="num">03</div><div><div class="title">Énergies renouvelables</div><div class="desc">Photovoltaïque, batteries, raccordement. Du résidentiel à l'utility-scale.</div></div><div class="arr">→</div></div>
+      <div class="metier"><div class="num">04</div><div><div class="title">Mobilité électrique — IRVE</div><div class="desc">Bornes de recharge certifiées, supervision et maintenance pour flottes.</div></div><div class="arr">→</div></div>
+      <div class="metier"><div class="num">05</div><div><div class="title">Bureaux d'études</div><div class="desc">Études d'exécution, dimensionnement, maîtrise d'œuvre, ingénierie.</div></div><div class="arr">→</div></div>
+      <div class="metier"><div class="num">06</div><div><div class="title">Maintenance & exploitation</div><div class="desc">Contrats long terme, GTB, télésurveillance, astreintes 24/7.</div></div><div class="arr">→</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="s reseau" id="reseau">
+  <div class="container-wide">
+    <div class="head">
+      <div>
+        <div class="eyebrow">Les entreprises du réseau</div>
+        <h2 class="h2">Huit PME, <em>une</em><br/>même ambition.</h2>
+      </div>
+      <p class="lede">Chaque entreprise garde son nom, son ancrage et ses équipes. Voltaria apporte les ressources, la trésorerie et la mutualisation.</p>
+    </div>
+    <div class="grid">
+      <div class="company">
+        <div>
+          <div class="city">Lyon · Auvergne-Rhône-Alpes</div>
+          <div class="name">Aurel Électrique</div>
+          <div class="desc">Génie électrique industriel et courants forts.</div>
+        </div>
+        <div class="stats"><span><b>120</b> collab.</span><span><b>1985</b></span></div>
+      </div>
+      <div class="company">
+        <div>
+          <div class="city">La Roche-sur-Yon</div>
+          <div class="name">Vendée Énergie</div>
+          <div class="desc">Installations tertiaires et bureaux d'études.</div>
+        </div>
+        <div class="stats"><span><b>65</b> collab.</span><span><b>1998</b></span></div>
+      </div>
+      <div class="company">
+        <div>
+          <div class="city">Le Mans · Sarthe</div>
+          <div class="name">Maine Génie Élec</div>
+          <div class="desc">Maintenance, exploitation et GTB industriel.</div>
+        </div>
+        <div class="stats"><span><b>82</b> collab.</span><span><b>1992</b></span></div>
+      </div>
+      <div class="company">
+        <div>
+          <div class="city">Bordeaux · Nouvelle-Aquitaine</div>
+          <div class="name">Bordeaux Courants</div>
+          <div class="desc">Courants forts et faibles tertiaires.</div>
+        </div>
+        <div class="stats"><span><b>54</b> collab.</span><span><b>2005</b></span></div>
+      </div>
+      <div class="company">
+        <div>
+          <div class="city">Toulouse · Occitanie</div>
+          <div class="name">Toulouse ÉlecPro</div>
+          <div class="desc">IRVE et photovoltaïque flottes / bailleurs.</div>
+        </div>
+        <div class="stats"><span><b>48</b> collab.</span><span><b>2011</b></span></div>
+      </div>
+      <div class="company">
+        <div>
+          <div class="city">Nantes · Pays de la Loire</div>
+          <div class="name">Atlantique Énergies</div>
+          <div class="desc">Photovoltaïque utility-scale, raccordement.</div>
+        </div>
+        <div class="stats"><span><b>38</b> collab.</span><span><b>2014</b></span></div>
+      </div>
+      <div class="company">
+        <div>
+          <div class="city">Strasbourg · Grand Est</div>
+          <div class="name">Rhin Électrique</div>
+          <div class="desc">Génie industriel transfrontalier, MES.</div>
+        </div>
+        <div class="stats"><span><b>71</b> collab.</span><span><b>1989</b></span></div>
+      </div>
+      <div class="company">
+        <div>
+          <div class="city">Lille · Hauts-de-France</div>
+          <div class="name">Nord Énergie Services</div>
+          <div class="desc">Maintenance multi-sites distribution.</div>
+        </div>
+        <div class="stats"><span><b>92</b> collab.</span><span><b>1976</b></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="s itw" id="itw">
+  <div class="container">
+    <div class="head">
+      <div>
+        <div class="eyebrow">Interviews · Dirigeants du réseau</div>
+        <h2 class="h2">Ce qu'en disent<br/>celles et ceux qui ont <em>rejoint</em>.</h2>
+      </div>
+      <p class="lede">Trois témoignages de dirigeants qui ont fait le pas — sans renoncer à ce qui faisait leur force.</p>
+    </div>
+    <div class="grid">
+      <div class="itw-card">
+        <div class="img img-1"></div>
+        <div class="q">Rejoindre Voltaria, c'était garder notre nom et nos équipes tout en accédant à des moyens que nous n'aurions jamais mobilisés seuls.</div>
+        <div class="who">
+          <div>
+            <div class="n">Jean Dubois</div>
+            <div class="r">PDG, Aurel Électrique — Lyon</div>
+          </div>
+          <a class="link" href="#">Lire →</a>
+        </div>
+      </div>
+      <div class="itw-card">
+        <div class="img img-2"></div>
+        <div class="q">On ne nous demande pas de devenir une autre entreprise. On nous demande de devenir meilleurs dans ce qu'on sait déjà faire.</div>
+        <div class="who">
+          <div>
+            <div class="n">Marie Larcher</div>
+            <div class="r">DG, Maine Génie Élec — Le Mans</div>
+          </div>
+          <a class="link" href="#">Lire →</a>
+        </div>
+      </div>
+      <div class="itw-card">
+        <div class="img img-3"></div>
+        <div class="q">Préparer la transmission tout en restant aux commandes, c'est ce que Voltaria a rendu possible chez nous.</div>
+        <div class="who">
+          <div>
+            <div class="n">Pierre Vasseur</div>
+            <div class="r">Fondateur, Vendée Énergie</div>
+          </div>
+          <a class="link" href="#">Lire →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="s chiffres" id="chiffres">
+  <div class="container">
+    <div class="head">
+      <div class="eyebrow">Chiffres clés</div>
+      <h2 class="h2">Un réseau qui <em>compte</em>.</h2>
+    </div>
+    <div class="num-grid">
+      <div class="num-cell"><div class="v">8</div><div class="l">Sociétés rejointes</div></div>
+      <div class="num-cell"><div class="v">570<sup>+</sup></div><div class="l">Collaborateurs sur tout le territoire</div></div>
+      <div class="num-cell"><div class="v">68<sup>M€</sup></div><div class="l">Chiffre d'affaires consolidé</div></div>
+      <div class="num-cell"><div class="v">12</div><div class="l">Régions couvertes</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="rejoindre" id="rejoindre">
+  <div class="container">
+    <div class="head">
+      <div class="eyebrow">Nous rejoindre</div>
+      <h2 class="h2">Deux façons de prendre<br/>part au <em>fleuron</em>.</h2>
+      <p class="lede">Que vous dirigiez une PME du génie électrique ou que vous souhaitiez rejoindre nos équipes — un seul email, une réponse rapide.</p>
+    </div>
+    <div class="paths">
+      <a class="path" href="mailto:contact@voltaria.eu">
+        <div class="e">Dirigeants</div>
+        <div class="l">Transmettre<br/>ou accélérer<br/>sa PME</div>
+        <div class="s">Sans perdre son nom, sans renoncer à ses équipes. Un partenariat industriel long terme avec une trajectoire commune.</div>
+        <div class="arr">contact@voltaria.eu →</div>
+      </a>
+      <a class="path" href="mailto:carrieres@voltaria.eu">
+        <div class="e">Talents</div>
+        <div class="l">Rejoindre<br/>l'aventure</div>
+        <div class="s">Postes techniques, ingénierie, M&A, finance, opérations — à Paris ou en région auprès des entreprises du réseau.</div>
+        <div class="arr">carrieres@voltaria.eu →</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <div class="b-name">
+          <svg viewBox="0 0 32 32" fill="none" aria-hidden><path d="M6 3L20 3L14 14H24L10 29L14 18H4L6 3Z"/></svg>
+          Voltaria
+        </div>
+        <p>Holding entrepreneurial du génie électrique français. Fédérer, préserver, accélérer les PME engagées dans la transition énergétique.</p>
+      </div>
+      <div>
+        <h5>Mission</h5>
+        <ul><li><a href="#histoire">L'histoire</a></li><li><a href="#metiers">Nos métiers</a></li><li><a href="#reseau">Le réseau</a></li></ul>
+      </div>
+      <div>
+        <h5>Société</h5>
+        <ul><li><a href="#itw">Dirigeants</a></li><li><a href="#chiffres">Chiffres</a></li><li><a href="#rejoindre">Nous rejoindre</a></li></ul>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <ul>
+          <li>16 avenue de Messine</li>
+          <li>75008 Paris</li>
+          <li><a href="mailto:contact@voltaria.eu">contact@voltaria.eu</a></li>
+          <li><a href="#">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Voltaria — Tous droits réservés</span>
+      <span>Mentions légales · Politique de confidentialité</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    const nav = document.querySelector('.nav');
+    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+</script>
+
+</body>
+</html>
