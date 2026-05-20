@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Voltaria — Manifeste électrique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* V4 — Manifeste électrique: storytelling chapters, pure black + electric cyan, animated bolts, constellation network */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  :root {
+    --bg: #050507;
+    --bg-2: #0c0c10;
+    --bg-3: #14141a;
+    --line: rgba(255,255,255,0.08);
+    --line-2: rgba(255,255,255,0.16);
+    --text: #f4f5f7;
+    --text-2: #b0b3bc;
+    --text-3: #5b5e66;
+    --accent: #00d4ff;
+    --accent-soft: rgba(0,212,255,0.3);
+    --accent-glow: rgba(0,212,255,0.6);
+  }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+  .mono { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace; }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+  .container { max-width: 1320px; margin: 0 auto; padding: 0 32px; }
+
+  /* Scroll progress bar (voltage bar at top) */
+  .voltage {
+    position: fixed; top: 0; left: 0; height: 2px; width: 0%;
+    background: var(--accent);
+    box-shadow: 0 0 14px var(--accent);
+    z-index: 200;
+    transition: width 0.1s linear;
+  }
+
+  /* Nav */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(5,5,7,0.6); backdrop-filter: blur(14px);
+    border-bottom: 1px solid transparent;
+    transition: background 0.3s ease, border-color 0.3s ease;
+  }
+  .nav.scrolled { background: rgba(5,5,7,0.92); border-bottom-color: var(--line); }
+  .nav .row {
+    max-width: 1320px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 32px;
+  }
+  .logo {
+    font-size: 20px; font-weight: 600;
+    letter-spacing: 0.02em;
+    display: flex; align-items: center; gap: 12px;
+    color: var(--text);
+  }
+  .logo svg { width: 24px; height: 24px; filter: drop-shadow(0 0 8px var(--accent-glow)); }
+  .logo svg path { fill: var(--accent); }
+  .logo .live {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.85); }
+  }
+  .nav ul { list-style: none; display: flex; gap: 32px; font-size: 13px; font-weight: 400; }
+  .nav ul a { color: var(--text-2); position: relative; padding: 4px 0; transition: color 0.2s ease; }
+  .nav ul a::after { content: ""; position: absolute; left: 0; bottom: 0; width: 0; height: 1px; background: var(--accent); box-shadow: 0 0 8px var(--accent-glow); transition: width 0.25s ease; }
+  .nav ul a:hover { color: var(--accent); }
+  .nav ul a:hover::after { width: 100%; }
+  .nav .cta {
+    background: transparent;
+    color: var(--accent);
+    padding: 10px 22px;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    border: 1px solid var(--accent);
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  .nav .cta:hover {
+    background: var(--accent); color: var(--bg);
+    box-shadow: 0 0 24px var(--accent-glow);
+  }
+  @media (max-width: 900px) { .nav ul { display: none; } }
+
+  /* Hero — manifesto */
+  .hero {
+    min-height: 100vh;
+    padding: 140px 0 80px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(800px 500px at 70% 30%, rgba(0,212,255,0.15), transparent 60%),
+      radial-gradient(600px 400px at 20% 70%, rgba(0,212,255,0.08), transparent 60%),
+      var(--bg);
+  }
+  /* Animated SVG lightning behind hero text */
+  .hero-bolt {
+    position: absolute;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 90%; max-width: 1400px;
+    opacity: 0.18;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .hero-bolt svg { width: 100%; height: auto; display: block; }
+  .hero-bolt path {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 0 12px var(--accent-glow));
+    stroke-dasharray: 2000;
+    stroke-dashoffset: 2000;
+    animation: bolt-draw 4s ease-out forwards, bolt-flash 6s ease-in-out infinite 4s;
+  }
+  @keyframes bolt-draw {
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes bolt-flash {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .hero .container { position: relative; z-index: 2; width: 100%; }
+  .hero .meta {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--text-3); margin-bottom: 40px;
+    display: flex; gap: 16px; align-items: center;
+  }
+  .hero .meta::before { content: ""; width: 32px; height: 1px; background: var(--accent); box-shadow: 0 0 6px var(--accent-glow); }
+  .hero h1 {
+    font-size: clamp(56px, 9vw, 140px);
+    font-weight: 200;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    margin-bottom: 48px;
+    max-width: 1200px;
+  }
+  .hero h1 .glow {
+    color: var(--accent);
+    text-shadow: 0 0 32px var(--accent-glow), 0 0 64px rgba(0,212,255,0.3);
+    font-weight: 300;
+    position: relative;
+  }
+  .hero h1 .glow::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: -4px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--accent) 50%, transparent 100%);
+    opacity: 0.7;
+  }
+  .hero .grid-h {
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px;
+    align-items: end; padding-top: 36px;
+    border-top: 1px solid var(--line);
+  }
+  @media (max-width: 900px) { .hero .grid-h { grid-template-columns: 1fr; gap: 32px; } }
+  .hero .sub {
+    font-size: 19px; color: var(--text-2);
+    max-width: 560px; line-height: 1.65; font-weight: 300;
+  }
+  .hero .actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    padding: 16px 28px;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    border: 1px solid transparent;
+    display: inline-flex; align-items: center; gap: 12px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-primary {
+    background: var(--accent); color: var(--bg);
+    box-shadow: 0 0 0 0 var(--accent-glow);
+  }
+  .btn-primary:hover {
+    box-shadow: 0 0 32px var(--accent-glow);
+    transform: translateY(-1px);
+  }
+  .btn-ghost {
+    background: transparent; color: var(--text);
+    border-color: var(--line-2);
+  }
+  .btn-ghost:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: 0 0 16px var(--accent-soft);
+  }
+  .scroll-cue {
+    position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--text-3);
+    display: flex; flex-direction: column; align-items: center; gap: 14px;
+    z-index: 2;
+  }
+  .scroll-cue::after {
+    content: ""; width: 1px; height: 40px;
+    background: linear-gradient(180deg, var(--accent) 0%, transparent 100%);
+    box-shadow: 0 0 8px var(--accent-glow);
+  }
+
+  /* Marquee strip */
+  .marquee {
+    background: var(--bg-2);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+    position: relative;
+  }
+  .marquee-track {
+    display: flex;
+    gap: 60px;
+    padding: 18px 0;
+    animation: marquee 40s linear infinite;
+    white-space: nowrap;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .marquee-item {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; letter-spacing: 0.16em;
+    color: var(--text-2);
+    display: flex; align-items: center; gap: 60px;
+  }
+  .marquee-item .dot {
+    width: 6px; height: 6px; background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--accent-glow);
+  }
+  .marquee-item.alt { color: var(--accent); }
+
+  /* Chapter section */
+  section.chap {
+    padding: 140px 0;
+    position: relative;
+    border-bottom: 1px solid var(--line);
+  }
+  .chap-label {
+    display: flex; align-items: center; gap: 18px;
+    margin-bottom: 36px;
+  }
+  .chap-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    padding: 6px 12px;
+    border: 1px solid var(--accent);
+    box-shadow: 0 0 16px rgba(0,212,255,0.15);
+  }
+  .chap-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--text-3);
+  }
+  .chap-title .arrow { color: var(--accent); margin-right: 8px; }
+  .h2 {
+    font-size: clamp(38px, 5.2vw, 76px);
+    font-weight: 200;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    color: var(--text);
+  }
+  .h2 b { font-weight: 500; }
+  .h2 .glow { color: var(--accent); text-shadow: 0 0 24px var(--accent-glow); font-weight: 300; }
+  .lede { font-size: 18px; color: var(--text-2); max-width: 600px; margin-top: 20px; line-height: 1.7; font-weight: 300; }
+
+  /* Chapter I — L'enjeu */
+  .enjeu {}
+  .enjeu .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  @media (max-width: 900px) { .enjeu .grid { grid-template-columns: 1fr; gap: 48px; } }
+  .enjeu .stat-block {
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    padding: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .enjeu .stat-block::before {
+    content: ""; position: absolute; top: 0; left: 0; width: 0; height: 1px;
+    background: var(--accent);
+    box-shadow: 0 0 12px var(--accent-glow);
+    animation: load-line 3s ease-out 0.5s forwards;
+  }
+  @keyframes load-line {
+    to { width: 100%; }
+  }
+  .enjeu .stat-block .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 24px;
+  }
+  .enjeu .stat-block .big {
+    font-size: clamp(56px, 7vw, 96px);
+    font-weight: 200;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+    color: var(--text);
+  }
+  .enjeu .stat-block .big .accent {
+    color: var(--accent);
+    text-shadow: 0 0 24px var(--accent-glow);
+  }
+  .enjeu .stat-block .src {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--text-3);
+  }
+  .enjeu p { font-size: 18px; color: var(--text-2); line-height: 1.75; margin-top: 20px; font-weight: 300; max-width: 540px; }
+  .enjeu p strong { color: var(--text); font-weight: 500; }
+
+  /* Chapter II — Notre histoire */
+  .histoire { background: var(--bg-2); }
+  .histoire .grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 80px; align-items: start; }
+  @media (max-width: 900px) { .histoire .grid { grid-template-columns: 1fr; gap: 48px; } }
+  .histoire .copy p {
+    color: var(--text-2); font-size: 16px;
+    line-height: 1.8; margin-top: 20px; max-width: 560px;
+  }
+  .pillars { margin-top: 44px; }
+  .pillar {
+    display: grid; grid-template-columns: 56px 1fr;
+    gap: 24px; padding: 22px 0;
+    border-top: 1px solid var(--line);
+    align-items: start;
+    transition: padding-left 0.3s ease;
+    position: relative;
+  }
+  .pillar:last-child { border-bottom: 1px solid var(--line); }
+  .pillar:hover { padding-left: 12px; }
+  .pillar:hover .n { color: var(--accent); }
+  .pillar .n {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--text-3);
+    transition: color 0.3s ease;
+  }
+  .pillar .l { font-size: 17px; font-weight: 500; color: var(--text); }
+  .pillar .d { font-size: 13px; color: var(--text-3); margin-top: 4px; line-height: 1.6; }
+
+  .founders-block {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    padding: 32px;
+    position: sticky; top: 100px;
+  }
+  .founders-block .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 28px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .founders-block .label::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, var(--accent) 0%, transparent 100%); }
+  .founders-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 600px) { .founders-grid { grid-template-columns: 1fr; } }
+  .founder { display: flex; flex-direction: column; cursor: pointer; }
+  .founder .img-wrap {
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    position: relative;
+    background: var(--bg-3);
+  }
+  .founder .img {
+    width: 100%; height: 100%;
+    background-size: cover; background-position: center top;
+    filter: grayscale(100%) brightness(0.85);
+    transition: filter 0.5s ease, transform 0.6s ease;
+  }
+  .founder:hover .img { filter: grayscale(0%) brightness(1); transform: scale(1.03); }
+  .founder .img.scott { background-image: url('img/scott.webp'); }
+  .founder .img.ambroise { background-image: url('img/ambroise.webp'); }
+  .founder .img-wrap::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 60%, rgba(0,212,255,0.0) 100%);
+    transition: background 0.4s ease;
+    pointer-events: none;
+  }
+  .founder:hover .img-wrap::after { background: linear-gradient(180deg, transparent 50%, rgba(0,212,255,0.18) 100%); }
+  .founder .b { padding: 14px 4px 0; }
+  .founder .n { font-size: 16px; font-weight: 600; }
+  .founder .r { font-size: 11px; color: var(--accent); margin-top: 4px; letter-spacing: 0.16em; text-transform: uppercase; }
+
+  /* Chapter III — Le réseau (constellation) */
+  .reseau {}
+  .reseau .head { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: end; margin-bottom: 64px; }
+  @media (max-width: 800px) { .reseau .head { grid-template-columns: 1fr; } }
+  .constellation-wrap {
+    position: relative;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    padding: 40px;
+    overflow: hidden;
+  }
+  .constellation-wrap::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(600px 400px at 50% 50%, rgba(0,212,255,0.06), transparent 70%);
+    pointer-events: none;
+  }
+  .constellation {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/10;
+    max-height: 600px;
+  }
+  .constellation svg {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+  }
+  .constellation svg .line {
+    stroke: var(--accent);
+    stroke-width: 1;
+    fill: none;
+    opacity: 0.25;
+    stroke-dasharray: 1500;
+    stroke-dashoffset: 1500;
+    animation: line-draw 3s ease-out 0.6s forwards;
+  }
+  @keyframes line-draw { to { stroke-dashoffset: 0; } }
+  .constellation .city {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    cursor: pointer;
+  }
+  .constellation .city .dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 16px var(--accent-glow), 0 0 32px rgba(0,212,255,0.35);
+    margin: 0 auto;
+    position: relative;
+    animation: dot-pulse 3s ease-in-out infinite;
+  }
+  .constellation .city:hover .dot {
+    animation: none;
+    transform: scale(1.5);
+    box-shadow: 0 0 32px var(--accent), 0 0 64px var(--accent-glow);
+  }
+  @keyframes dot-pulse {
+    0%, 100% { opacity: 0.9; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.85); }
+  }
+  .constellation .city .label {
+    margin-top: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--text);
+    white-space: nowrap;
+    transition: color 0.2s ease;
+  }
+  .constellation .city .city-name {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--text-3);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-top: 4px;
+    font-weight: 400;
+  }
+  .constellation .city:hover .label { color: var(--accent); }
+
+  .reseau-table {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--line);
+  }
+  @media (max-width: 900px) { .reseau-table { grid-template-columns: repeat(2, 1fr); } }
+  .reseau-table .biz {
+    padding: 24px 20px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    transition: background 0.3s ease;
+    cursor: pointer;
+  }
+  .reseau-table .biz:hover { background: rgba(0,212,255,0.04); }
+  .reseau-table .biz:hover .name { color: var(--accent); }
+  .reseau-table .biz:last-child { border-right: none; }
+  @media (max-width: 900px) { .reseau-table .biz:nth-child(2n) { border-right: none; } }
+  .reseau-table .biz .ix {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-3);
+    letter-spacing: 0.16em;
+    margin-bottom: 12px;
+  }
+  .reseau-table .biz .name { font-size: 17px; font-weight: 600; letter-spacing: -0.01em; transition: color 0.25s ease; }
+  .reseau-table .biz .city { font-size: 11px; color: var(--text-3); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 6px; }
+
+  /* Chapter IV — Chiffres animés */
+  .chiffres { background: var(--bg-2); }
+  .chiffres .head { max-width: 760px; margin-bottom: 80px; }
+  .num-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--line);
+  }
+  @media (max-width: 800px) { .num-grid { grid-template-columns: repeat(2, 1fr); } }
+  .num-cell {
+    padding: 60px 24px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .num-cell:last-child { border-right: none; }
+  @media (max-width: 800px) { .num-cell:nth-child(2) { border-right: none; } }
+  .num-cell::before {
+    content: ""; position: absolute; left: 0; top: 0;
+    width: 0; height: 1px;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent-glow);
+    transition: width 1.5s ease 0.3s;
+  }
+  .num-cell.visible::before { width: 100%; }
+  .num-cell .v {
+    font-size: clamp(64px, 8vw, 120px);
+    font-weight: 200;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--text);
+  }
+  .num-cell .v .ct { display: inline-block; min-width: 1ch; }
+  .num-cell .v sup { font-size: 0.4em; vertical-align: top; opacity: 0.6; font-weight: 400; margin-left: 2px; color: var(--accent); }
+  .num-cell .l {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--text-3);
+    margin-top: 18px; max-width: 200px;
+    letter-spacing: 0.08em;
+  }
+
+  /* Chapter V — Valeurs */
+  .valeurs {}
+  .valeurs .head { text-align: center; max-width: 760px; margin: 0 auto 64px; }
+  .valeurs .chap-label { justify-content: center; }
+  .v-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+  @media (max-width: 900px) { .v-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .v-grid { grid-template-columns: 1fr; } }
+  .val {
+    padding: 40px 28px;
+    border: 1px solid var(--line);
+    border-right: none;
+    transition: background 0.3s ease, border-color 0.3s ease;
+    position: relative;
+  }
+  .val:last-child { border-right: 1px solid var(--line); }
+  @media (max-width: 900px) {
+    .val { border-right: 1px solid var(--line); border-bottom: none; }
+    .val:nth-child(2n) { border-right: none; }
+    .val:nth-last-child(-n+2) { border-bottom: 1px solid var(--line); }
+  }
+  .val:hover { background: rgba(0,212,255,0.04); border-color: var(--accent); }
+  .val:hover .icon { color: var(--accent); }
+  .val:hover .icon::after { opacity: 1; }
+  .val .icon {
+    width: 44px; height: 44px;
+    display: grid; place-items: center;
+    margin-bottom: 24px;
+    color: var(--text);
+    position: relative;
+    transition: color 0.3s ease;
+  }
+  .val .icon::after {
+    content: "";
+    position: absolute; inset: -8px;
+    border-radius: 50%;
+    box-shadow: 0 0 24px var(--accent-glow);
+    opacity: 0; transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+  .val .icon svg { width: 28px; height: 28px; position: relative; z-index: 1; }
+  .val .icon svg path, .val .icon svg circle {
+    stroke: currentColor;
+    stroke-width: 1.5; fill: none;
+    stroke-linecap: round; stroke-linejoin: round;
+  }
+  .val h3 { font-size: 22px; font-weight: 500; letter-spacing: -0.01em; margin-bottom: 14px; color: var(--text); }
+  .val p { color: var(--text-3); font-size: 13px; line-height: 1.65; }
+
+  /* Chapter VI — Rejoindre */
+  .rejoindre {
+    position: relative;
+    overflow: hidden;
+    padding: 160px 0;
+    border-bottom: none;
+  }
+  .rejoindre::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(900px 600px at 50% 100%, rgba(0,212,255,0.15), transparent 60%),
+      radial-gradient(600px 400px at 20% 20%, rgba(0,212,255,0.08), transparent 60%);
+    z-index: 0;
+  }
+  .rejoindre > .container { position: relative; z-index: 1; }
+  .rejoindre .head { text-align: center; max-width: 900px; margin: 0 auto 64px; }
+  .rejoindre .chap-label { justify-content: center; }
+  .rejoindre .lede { margin-left: auto; margin-right: auto; }
+  .paths {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    max-width: 1100px; margin: 0 auto;
+  }
+  @media (max-width: 800px) { .paths { grid-template-columns: 1fr; } }
+  .path {
+    background: var(--bg);
+    padding: 48px 36px;
+    display: flex; flex-direction: column;
+    transition: background 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .path::before {
+    content: ""; position: absolute; top: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--accent);
+    box-shadow: 0 0 12px var(--accent-glow);
+    transition: width 0.4s ease;
+  }
+  .path:hover { background: var(--bg-2); }
+  .path:hover::before { width: 100%; }
+  .path .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent);
+  }
+  .path .l {
+    font-size: 30px; font-weight: 300; letter-spacing: -0.01em;
+    margin-top: 16px; line-height: 1.15;
+    color: var(--text);
+  }
+  .path .s {
+    color: var(--text-2);
+    font-size: 14px; margin-top: 18px;
+    line-height: 1.7; flex: 1;
+  }
+  .path .arr {
+    color: var(--accent); font-size: 12px;
+    font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+    margin-top: 32px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    display: inline-flex; align-items: center; gap: 10px;
+    transition: gap 0.3s ease;
+  }
+  .path:hover .arr { gap: 16px; }
+
+  /* Footer */
+  footer.foot { background: var(--bg); color: var(--text-3); padding: 60px 0 32px; }
+  .foot-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 56px;
+    border-bottom: 1px solid var(--line);
+  }
+  @media (max-width: 800px) { .foot-grid { grid-template-columns: 1fr 1fr; } }
+  .foot-grid h5 { color: var(--text); font-size: 12px; font-weight: 600; margin-bottom: 18px; letter-spacing: 0.16em; text-transform: uppercase; }
+  .foot-grid ul { list-style: none; }
+  .foot-grid li { font-size: 13px; margin-bottom: 10px; }
+  .foot-grid a:hover { color: var(--accent); }
+  .foot-grid .b-name {
+    color: var(--text); font-size: 22px; font-weight: 600;
+    margin-bottom: 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .foot-grid .b-name svg { width: 22px; height: 22px; filter: drop-shadow(0 0 8px var(--accent-glow)); }
+  .foot-grid .b-name svg path { fill: var(--accent); }
+  .foot-grid p { font-size: 13px; line-height: 1.65; max-width: 340px; }
+  .foot-bottom {
+    padding-top: 28px;
+    display: flex; justify-content: space-between; gap: 12px;
+    font-size: 11px; flex-wrap: wrap;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+</style>
+</head>
+<body>
+
+<div class="voltage" id="voltage"></div>
+
+<header class="nav">
+  <div class="row">
+    <a class="logo" href="#top">
+      <svg viewBox="0 0 32 32" fill="none" aria-hidden><path d="M6 3L20 3L14 14H24L10 29L14 18H4L6 3Z"/></svg>
+      <span>Voltaria</span>
+      <span class="live" aria-hidden></span>
+    </a>
+    <ul>
+      <li><a href="#enjeu">L'enjeu</a></li>
+      <li><a href="#histoire">L'histoire</a></li>
+      <li><a href="#reseau">Le réseau</a></li>
+      <li><a href="#chiffres">Chiffres</a></li>
+      <li><a href="#valeurs">Valeurs</a></li>
+    </ul>
+    <a class="cta" href="#rejoindre">Rejoindre →</a>
+  </div>
+</header>
+
+<section id="top" class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-bolt">
+    <svg viewBox="0 0 1400 700" preserveAspectRatio="none" aria-hidden>
+      <path d="M 50 200 L 350 280 L 280 380 L 600 350 L 550 460 L 880 420 L 820 540 L 1100 510 L 1050 620 L 1350 600" />
+      <path d="M 100 480 L 320 420 L 290 320 L 540 280 L 510 200 L 760 180 L 720 120 L 980 110 L 940 60 L 1280 50" opacity="0.6" />
+    </svg>
+  </div>
+  <div class="container">
+    <div class="meta">[ Manifeste · 2026 · Holding du génie électrique français ]</div>
+    <h1>Le prochain<br/><span class="glow">fleuron</span> du génie<br/>électrique français.</h1>
+    <div class="grid-h">
+      <p class="sub">La transition énergétique est en train de se jouer dans les ateliers, les bureaux d'études et sur les chantiers. Voltaria fédère celles et ceux qui la rendent possible.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#rejoindre">Rejoindre comme dirigeant →</a>
+        <a class="btn btn-ghost" href="#rejoindre">Développer votre carrière</a>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-cue">Faites défiler</div>
+</section>
+
+<div class="marquee" aria-hidden>
+  <div class="marquee-track">
+    <span class="marquee-item">Fédérer<span class="dot"></span></span>
+    <span class="marquee-item alt">Préserver<span class="dot"></span></span>
+    <span class="marquee-item">Accélérer<span class="dot"></span></span>
+    <span class="marquee-item alt">Engagement<span class="dot"></span></span>
+    <span class="marquee-item">8 sociétés · 12 régions · 570 collaborateurs<span class="dot"></span></span>
+    <span class="marquee-item alt">Le prochain fleuron du génie électrique français<span class="dot"></span></span>
+    <span class="marquee-item">Fédérer<span class="dot"></span></span>
+    <span class="marquee-item alt">Préserver<span class="dot"></span></span>
+    <span class="marquee-item">Accélérer<span class="dot"></span></span>
+    <span class="marquee-item alt">Engagement<span class="dot"></span></span>
+    <span class="marquee-item">8 sociétés · 12 régions · 570 collaborateurs<span class="dot"></span></span>
+    <span class="marquee-item alt">Le prochain fleuron du génie électrique français<span class="dot"></span></span>
+  </div>
+</div>
+
+<section class="chap enjeu" id="enjeu">
+  <div class="container">
+    <div class="chap-label">
+      <div class="chap-num">I</div>
+      <div class="chap-title"><span class="arrow">▸</span>L'enjeu</div>
+    </div>
+    <div class="grid">
+      <div>
+        <h2 class="h2">La transition énergétique<br/>se joue <span class="glow">maintenant</span>.</h2>
+        <p>La France compte plus de <strong>30 000 PME</strong> du génie électrique. Elles électrifient les bâtiments, les usines et les mobilités — mais font face à un mur : transmission, transition, recrutement, financement.</p>
+        <p>Voltaria s'est créée pour leur donner les moyens de leur ambition, sans rien sacrifier de leur identité.</p>
+      </div>
+      <div class="stat-block">
+        <div class="label">[ Chiffre clé · ADEME 2024 ]</div>
+        <div class="big"><span class="accent">+60%</span></div>
+        <div style="font-size: 18px; color: var(--text-2); margin-top: 16px; max-width: 360px; line-height: 1.6;">de croissance attendue pour le génie électrique français d'ici 2030.</div>
+        <div class="src">Source — Programmation pluriannuelle de l'énergie</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="chap histoire" id="histoire">
+  <div class="container">
+    <div class="grid">
+      <div class="copy">
+        <div class="chap-label">
+          <div class="chap-num">II</div>
+          <div class="chap-title"><span class="arrow">▸</span>Notre histoire</div>
+        </div>
+        <h2 class="h2">Vous <b>bâtissez</b>,<br/>nous <span class="glow">accélérons</span>.</h2>
+        <p>Fondée en 2024 par Scott Gordon et Ambroise Nugues, Voltaria s'associe à des sociétés du génie électrique français engagées dans la transition énergétique.</p>
+        <p>Nous nous appuyons sur des entreprises éprouvées — leurs équipes, leurs marques, leurs clients historiques — pour bâtir un acteur de référence, sans en effacer ni le nom, ni l'âme.</p>
+        <div class="pillars">
+          <div class="pillar"><div class="n">01</div><div><div class="l">Ressources humaines</div><div class="d">Recrutement, formation, fidélisation des équipes terrain et bureaux d'études.</div></div></div>
+          <div class="pillar"><div class="n">02</div><div><div class="l">Finance & trésorerie</div><div class="d">Capacité d'investissement, BFR, structuration de bilan.</div></div></div>
+          <div class="pillar"><div class="n">03</div><div><div class="l">Développement commercial</div><div class="d">Comptes-clés nationaux, alliances inter-entreprises, croissance externe.</div></div></div>
+          <div class="pillar"><div class="n">04</div><div><div class="l">Ingénierie & expertise</div><div class="d">Partage de compétences techniques, certifications, R&D mutualisée.</div></div></div>
+        </div>
+      </div>
+      <div class="founders-block">
+        <div class="label">Les fondateurs</div>
+        <div class="founders-grid">
+          <div class="founder">
+            <div class="img-wrap"><div class="img scott"></div></div>
+            <div class="b"><div class="n">Scott Gordon</div><div class="r">Président</div></div>
+          </div>
+          <div class="founder">
+            <div class="img-wrap"><div class="img ambroise"></div></div>
+            <div class="b"><div class="n">Ambroise Nugues</div><div class="r">Directeur Général</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="chap reseau" id="reseau">
+  <div class="container">
+    <div class="chap-label">
+      <div class="chap-num">III</div>
+      <div class="chap-title"><span class="arrow">▸</span>Le réseau</div>
+    </div>
+    <div class="head">
+      <h2 class="h2">Une <span class="glow">constellation</span><br/>de PME du territoire.</h2>
+      <p class="lede">8 sociétés indépendantes, une même ambition collective. Chaque entreprise garde son nom, son ancrage et ses équipes.</p>
+    </div>
+    <div class="constellation-wrap">
+      <div class="constellation">
+        <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet" aria-hidden>
+          <!-- Constellation lines connecting cities -->
+          <path class="line" d="M 280 180 L 480 90 L 700 110 L 850 230 L 800 400 L 600 480 L 360 470 L 220 330 Z" />
+          <path class="line" d="M 280 180 L 700 110 M 280 180 L 600 480 M 480 90 L 800 400 M 220 330 L 850 230 M 360 470 L 480 90" opacity="0.5" />
+        </svg>
+        <!-- Cities positioned by approximate French geography -->
+        <a class="city" href="#" style="left: 28%; top: 30%;"><div class="dot"></div><div class="label">Nord Énergie<span class="city-name">Lille</span></div></a>
+        <a class="city" href="#" style="left: 48%; top: 15%;"><div class="dot"></div><div class="label">Maine Génie Élec<span class="city-name">Le Mans</span></div></a>
+        <a class="city" href="#" style="left: 70%; top: 18%;"><div class="dot"></div><div class="label">Rhin Électrique<span class="city-name">Strasbourg</span></div></a>
+        <a class="city" href="#" style="left: 22%; top: 55%;"><div class="dot"></div><div class="label">Vendée Énergie<span class="city-name">La Roche-sur-Yon</span></div></a>
+        <a class="city" href="#" style="left: 36%; top: 78%;"><div class="dot"></div><div class="label">Atlantique Énergies<span class="city-name">Nantes</span></div></a>
+        <a class="city" href="#" style="left: 60%; top: 80%;"><div class="dot"></div><div class="label">Bordeaux Courants<span class="city-name">Bordeaux</span></div></a>
+        <a class="city" href="#" style="left: 80%; top: 67%;"><div class="dot"></div><div class="label">Aurel Électrique<span class="city-name">Lyon</span></div></a>
+        <a class="city" href="#" style="left: 85%; top: 38%;"><div class="dot"></div><div class="label">Toulouse ÉlecPro<span class="city-name">Toulouse</span></div></a>
+      </div>
+    </div>
+    <div class="reseau-table">
+      <a class="biz" href="#"><div class="ix">01 · Lille</div><div class="name">Nord Énergie Services</div><div class="city">Hauts-de-France</div></a>
+      <a class="biz" href="#"><div class="ix">02 · Le Mans</div><div class="name">Maine Génie Élec</div><div class="city">Sarthe</div></a>
+      <a class="biz" href="#"><div class="ix">03 · Strasbourg</div><div class="name">Rhin Électrique</div><div class="city">Grand Est</div></a>
+      <a class="biz" href="#"><div class="ix">04 · La Roche-sur-Yon</div><div class="name">Vendée Énergie</div><div class="city">Pays de la Loire</div></a>
+      <a class="biz" href="#"><div class="ix">05 · Nantes</div><div class="name">Atlantique Énergies</div><div class="city">Pays de la Loire</div></a>
+      <a class="biz" href="#"><div class="ix">06 · Bordeaux</div><div class="name">Bordeaux Courants</div><div class="city">Nouvelle-Aquitaine</div></a>
+      <a class="biz" href="#"><div class="ix">07 · Lyon</div><div class="name">Aurel Électrique</div><div class="city">Auvergne-Rhône-Alpes</div></a>
+      <a class="biz" href="#"><div class="ix">08 · Toulouse</div><div class="name">Toulouse ÉlecPro</div><div class="city">Occitanie</div></a>
+    </div>
+  </div>
+</section>
+
+<section class="chap chiffres" id="chiffres">
+  <div class="container">
+    <div class="chap-label">
+      <div class="chap-num">IV</div>
+      <div class="chap-title"><span class="arrow">▸</span>En quelques chiffres</div>
+    </div>
+    <div class="head">
+      <h2 class="h2">Un groupe en <span class="glow">pleine</span><br/>construction.</h2>
+    </div>
+    <div class="num-grid">
+      <div class="num-cell" data-anim><div class="v"><span class="ct" data-count="8">0</span></div><div class="l">Sociétés du réseau</div></div>
+      <div class="num-cell" data-anim><div class="v"><span class="ct" data-count="570">0</span><sup>+</sup></div><div class="l">Collaborateurs sur tout le territoire</div></div>
+      <div class="num-cell" data-anim><div class="v"><span class="ct" data-count="68">0</span><sup>M€</sup></div><div class="l">Chiffre d'affaires consolidé</div></div>
+      <div class="num-cell" data-anim><div class="v"><span class="ct" data-count="12">0</span></div><div class="l">Régions couvertes</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="chap valeurs" id="valeurs">
+  <div class="container">
+    <div class="head">
+      <div class="chap-label">
+        <div class="chap-num">V</div>
+        <div class="chap-title"><span class="arrow">▸</span>Ce qui nous anime</div>
+      </div>
+      <h2 class="h2">Quatre <span class="glow">convictions</span><br/>qui guident chaque décision.</h2>
+    </div>
+    <div class="v-grid">
+      <div class="val">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 12h7m0 0V5l8 8m-8 0v7"/></svg></div>
+        <h3>Fédérer</h3>
+        <p>Réunir les PME du génie électrique dans une communauté entrepreneuriale durable.</p>
+      </div>
+      <div class="val">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3l9 4v6c0 5-4 8-9 8s-9-3-9-8V7l9-4z"/></svg></div>
+        <h3>Préserver</h3>
+        <p>Garder intacts l'ADN, les marques et les équipes qui font la singularité de chaque société.</p>
+      </div>
+      <div class="val">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-2 8 9-12h-7l2-8z"/></svg></div>
+        <h3>Accélérer</h3>
+        <p>Apporter aux dirigeants les ressources financières et humaines pour franchir un nouveau cap.</p>
+      </div>
+      <div class="val">
+        <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></div>
+        <h3>Engagement</h3>
+        <p>Une vision long terme, sans logique de revente. Une trajectoire commune avec les dirigeants.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="chap rejoindre" id="rejoindre">
+  <div class="container">
+    <div class="head">
+      <div class="chap-label">
+        <div class="chap-num">VI</div>
+        <div class="chap-title"><span class="arrow">▸</span>Nous rejoindre</div>
+      </div>
+      <h2 class="h2">Deux façons de prendre<br/>part au <span class="glow">fleuron</span>.</h2>
+      <p class="lede">Que vous dirigiez une PME du génie électrique ou que vous souhaitiez rejoindre nos équipes — un seul email, une réponse rapide.</p>
+    </div>
+    <div class="paths">
+      <a class="path" href="mailto:contact@voltaria.eu">
+        <div class="num">01 · Dirigeants</div>
+        <div class="l">Transmettre<br/>ou accélérer<br/>sa PME</div>
+        <div class="s">Sans perdre son nom, sans renoncer à ses équipes. Un partenariat industriel long terme avec une trajectoire commune.</div>
+        <div class="arr">contact@voltaria.eu →</div>
+      </a>
+      <a class="path" href="mailto:carrieres@voltaria.eu">
+        <div class="num">02 · Talents</div>
+        <div class="l">Rejoindre<br/>l'aventure</div>
+        <div class="s">Postes techniques, ingénierie, M&A, finance, opérations — à Paris ou en région auprès des entreprises du réseau.</div>
+        <div class="arr">carrieres@voltaria.eu →</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <div class="b-name">
+          <svg viewBox="0 0 32 32" fill="none" aria-hidden><path d="M6 3L20 3L14 14H24L10 29L14 18H4L6 3Z"/></svg>
+          Voltaria
+        </div>
+        <p>Le groupe qui fédère les PME françaises du génie électrique engagées dans la transition énergétique.</p>
+      </div>
+      <div>
+        <h5>Chapitres</h5>
+        <ul><li><a href="#enjeu">I · L'enjeu</a></li><li><a href="#histoire">II · Notre histoire</a></li><li><a href="#reseau">III · Le réseau</a></li><li><a href="#chiffres">IV · Chiffres</a></li><li><a href="#valeurs">V · Valeurs</a></li><li><a href="#rejoindre">VI · Nous rejoindre</a></li></ul>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <ul>
+          <li>16 avenue de Messine</li>
+          <li>75008 Paris</li>
+          <li><a href="mailto:contact@voltaria.eu">contact@voltaria.eu</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Suivez-nous</h5>
+        <ul><li><a href="#">LinkedIn</a></li></ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Voltaria — Tous droits réservés</span>
+      <span>VOLTAGE 220V · TRANSITION 60HZ</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    // Nav scroll state
+    const nav = document.querySelector('.nav');
+    const voltage = document.getElementById('voltage');
+    const onScroll = () => {
+      nav.classList.toggle('scrolled', window.scrollY > 24);
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = h > 0 ? (window.scrollY / h) * 100 : 0;
+      voltage.style.width = pct + '%';
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // Animated counters
+    const animateCount = (el, target, duration = 1400) => {
+      const start = performance.now();
+      const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+      const tick = (now) => {
+        const elapsed = now - start;
+        const p = Math.min(elapsed / duration, 1);
+        const value = Math.round(easeOut(p) * target);
+        el.textContent = value;
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          const counter = entry.target.querySelector('.ct');
+          if (counter && !counter.dataset.done) {
+            counter.dataset.done = '1';
+            animateCount(counter, parseInt(counter.dataset.count, 10));
+          }
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.35 });
+
+    document.querySelectorAll('[data-anim]').forEach((el) => observer.observe(el));
+  })();
+</script>
+
+</body>
+</html>
