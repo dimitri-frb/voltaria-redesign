@@ -127,7 +127,7 @@
     aspect-ratio: 16/6;
     background-image:
       linear-gradient(180deg, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.18) 100%),
-      url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=2400&q=85');
+      url('https://images.unsplash.com/photo-1509391366360-2e959784a276?w=2400&q=85');
     background-size: cover; background-position: center;
     border: 1px solid var(--line);
     position: relative;
@@ -252,8 +252,127 @@
   .num-cell .v sup { font-size: 0.4em; vertical-align: top; opacity: 0.5; font-weight: 400; margin-left: 2px; }
   .num-cell .l { font-size: 13px; color: var(--ink-3); margin: 18px auto 0; max-width: 200px; }
 
-  /* Réseau — INNOVATION: horizontal scrollable carousel */
+  /* Réseau — featured single-company card (ICR Télécom) */
   .reseau { background: var(--bg-3); }
+  .company-feature {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: var(--paper);
+    border: 1px solid var(--line-strong);
+  }
+  @media (max-width: 900px) { .company-feature { grid-template-columns: 1fr; } }
+  .company-feature .photo {
+    aspect-ratio: 4/3;
+    background-image: url('img/ICR-telecom.jpeg');
+    background-size: cover; background-position: center;
+    border-right: 1px solid var(--line-strong);
+  }
+  @media (max-width: 900px) { .company-feature .photo { border-right: none; border-bottom: 1px solid var(--line-strong); aspect-ratio: 16/9; } }
+  .company-feature .info {
+    padding: 48px 44px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  @media (max-width: 600px) { .company-feature .info { padding: 32px 28px; } }
+  .company-feature .badge {
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .company-feature .badge::before { content: ""; width: 24px; height: 1px; background: var(--gold); }
+  .company-feature h3 {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: clamp(36px, 4.6vw, 56px);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    margin: 16px 0 24px;
+    line-height: 1.05;
+  }
+  .company-feature .desc {
+    color: var(--ink-2);
+    font-size: 16px; line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 36px;
+    max-width: 480px;
+  }
+  .company-feature .stats {
+    display: grid; grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+  }
+  .company-feature .stats > div {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+  }
+  .company-feature .stats b {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 28px; font-weight: 500;
+    letter-spacing: -0.02em; line-height: 1;
+    display: block;
+  }
+  .company-feature .stats b sup { font-size: 0.45em; vertical-align: top; opacity: 0.55; color: var(--gold); }
+  .company-feature .stats span {
+    font-size: 12px; color: var(--ink-3);
+    margin-top: 8px; display: block;
+    letter-spacing: 0.04em;
+  }
+  .company-feature .link {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-top: 28px;
+    font-size: 13px; color: var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 4px; align-self: flex-start;
+    transition: color 0.2s ease, border-color 0.2s ease, gap 0.25s ease;
+  }
+  .company-feature .link:hover { color: var(--gold); border-color: var(--gold); gap: 14px; }
+
+  /* Featured single quote (Paroles) — replaces 3-card grid */
+  .featured-quote {
+    max-width: 920px;
+    margin: 64px auto 0;
+    text-align: center;
+    padding-top: 56px;
+    border-top: 1px solid var(--ink);
+  }
+  .featured-quote .q {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 400;
+    line-height: 1.3;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .featured-quote .q::before { content: "« "; color: var(--gold); }
+  .featured-quote .q::after { content: " »"; color: var(--gold); }
+  .featured-quote .who {
+    margin: 48px auto 0;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    max-width: 460px;
+  }
+  .featured-quote .who .n {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 22px; font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .featured-quote .who .n .placeholder {
+    background: rgba(164,133,67,0.1);
+    border: 1px dashed var(--gold);
+    padding: 2px 12px;
+    color: var(--gold);
+    font-style: normal;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    letter-spacing: 0.06em;
+    margin-right: 6px;
+  }
+  .featured-quote .who .r {
+    font-size: 12px; color: var(--ink-3);
+    margin-top: 8px; letter-spacing: 0.06em;
+  }
   .reseau .head {
     display: grid; grid-template-columns: 1.2fr 1fr;
     gap: 40px; align-items: end;
@@ -556,10 +675,10 @@
       <h2 class="h2">Un groupe en <em>pleine</em><br/>construction.</h2>
     </div>
     <div class="num-grid">
-      <div class="num-cell"><div class="v">8</div><div class="l">Sociétés du réseau</div></div>
-      <div class="num-cell"><div class="v">570<sup>+</sup></div><div class="l">Collaborateurs sur tout le territoire</div></div>
-      <div class="num-cell"><div class="v">68<sup>M€</sup></div><div class="l">Chiffre d'affaires consolidé</div></div>
-      <div class="num-cell"><div class="v">12</div><div class="l">Régions couvertes</div></div>
+      <div class="num-cell"><div class="v">1<sup>ère</sup></div><div class="l">Société rejointe — ICR Télécom</div></div>
+      <div class="num-cell"><div class="v">40</div><div class="l">Collaborateurs en Île-de-France</div></div>
+      <div class="num-cell"><div class="v">3<sup>M€</sup></div><div class="l">Chiffre d'affaires</div></div>
+      <div class="num-cell"><div class="v">1500<sup>+</sup></div><div class="l">Interventions par mois</div></div>
     </div>
   </div>
 </section>
@@ -568,61 +687,40 @@
   <div class="container">
     <div class="head">
       <div>
-        <div class="eyebrow">Le réseau</div>
-        <h2 class="h2">Les entreprises<br/>du <em>groupe</em>.</h2>
+        <div class="eyebrow">Société du réseau</div>
+        <h2 class="h2">La première pierre<br/>du <em>fleuron</em>.</h2>
       </div>
-      <p class="lede">8 sociétés indépendantes, une même ambition collective. Chaque entreprise garde son nom, son ancrage et ses équipes.</p>
+      <p class="lede">Voltaria s'associe à des PME établies, ancrées localement et reconnues sur leur métier. ICR Télécom est la première société à rejoindre le groupe.</p>
     </div>
-    <div class="scroll-controls">
-      <div class="count"><b>01</b>/ 08 entreprises</div>
-      <div class="arrows">
-        <button class="arrow-btn" aria-label="Précédent" onclick="document.querySelector('.scroll-track').scrollBy({left:-340,behavior:'smooth'})"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
-        <button class="arrow-btn" aria-label="Suivant" onclick="document.querySelector('.scroll-track').scrollBy({left:340,behavior:'smooth'})"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+    <div class="company-feature">
+      <div class="photo" role="img" aria-label="Intervention sur le terrain — ICR Télécom"></div>
+      <div class="info">
+        <div class="badge">01 · Limours · Île-de-France</div>
+        <h3>ICR Télécom</h3>
+        <p class="desc">Entreprise française d'électricité et de télécommunications, ICR conçoit et installe depuis 2006 les réseaux électriques, la fibre optique, les bornes IRVE et la vidéoprotection — pour particuliers, professionnels et collectivités.</p>
+        <div class="stats">
+          <div><b>40</b><span>collaborateurs</span></div>
+          <div><b>3<sup>M€</sup></b><span>chiffre d'affaires</span></div>
+          <div><b>1500<sup>+</sup></b><span>interventions / mois</span></div>
+          <div><b>2006</b><span>année de fondation</span></div>
+        </div>
+        <a class="link" href="https://icrtelecom.fr" target="_blank" rel="noopener">icrtelecom.fr →</a>
       </div>
-    </div>
-    <div class="scroll-track">
-      <a class="biz" href="#"><div class="mark">AE</div><div class="bottom"><div class="name">Aurel<br/>Électrique</div><div class="city">Lyon · Auvergne-Rhône-Alpes</div><div class="more">En savoir plus →</div></div></a>
-      <a class="biz" href="#"><div class="mark">VE</div><div class="bottom"><div class="name">Vendée<br/>Énergie</div><div class="city">La Roche-sur-Yon · Pays de la Loire</div><div class="more">En savoir plus →</div></div></a>
-      <a class="biz" href="#"><div class="mark">MGE</div><div class="bottom"><div class="name">Maine<br/>Génie Élec</div><div class="city">Le Mans · Sarthe</div><div class="more">En savoir plus →</div></div></a>
-      <a class="biz" href="#"><div class="mark">BC</div><div class="bottom"><div class="name">Bordeaux<br/>Courants</div><div class="city">Bordeaux · Nouvelle-Aquitaine</div><div class="more">En savoir plus →</div></div></a>
-      <a class="biz" href="#"><div class="mark">TEP</div><div class="bottom"><div class="name">Toulouse<br/>ÉlecPro</div><div class="city">Toulouse · Occitanie</div><div class="more">En savoir plus →</div></div></a>
-      <a class="biz" href="#"><div class="mark">AE</div><div class="bottom"><div class="name">Atlantique<br/>Énergies</div><div class="city">Nantes · Pays de la Loire</div><div class="more">En savoir plus →</div></div></a>
-      <a class="biz" href="#"><div class="mark">RE</div><div class="bottom"><div class="name">Rhin<br/>Électrique</div><div class="city">Strasbourg · Grand Est</div><div class="more">En savoir plus →</div></div></a>
-      <a class="biz" href="#"><div class="mark">NES</div><div class="bottom"><div class="name">Nord Énergie<br/>Services</div><div class="city">Lille · Hauts-de-France</div><div class="more">En savoir plus →</div></div></a>
     </div>
   </div>
 </section>
 
 <section class="s paroles" id="paroles">
   <div class="container">
-    <div class="head">
-      <div>
-        <div class="eyebrow">Paroles d'associés</div>
-        <h2 class="h2">Le mot<br/>des <em>dirigeants</em>.</h2>
-      </div>
-      <p class="lede">Trois dirigeants qui ont rejoint le groupe partagent ce que cette association leur apporte au quotidien — sans renoncer à l'indépendance de leur société.</p>
+    <div class="head" style="text-align: center; max-width: 720px; margin: 0 auto;">
+      <div class="eyebrow" style="justify-content: center;">Parole d'associé</div>
+      <h2 class="h2">Le mot du <em>dirigeant</em>.</h2>
     </div>
-    <div class="quotes-grid">
-      <div class="quote-card">
-        <div class="q">Rejoindre Voltaria, c'était garder notre nom et nos équipes tout en accédant à des moyens que nous n'aurions jamais mobilisés seuls.</div>
-        <div class="who">
-          <div class="n">Jean Dubois</div>
-          <div class="r">PDG, Aurel Électrique — Lyon</div>
-        </div>
-      </div>
-      <div class="quote-card">
-        <div class="q">On ne nous demande pas de devenir une autre entreprise. On nous demande de devenir meilleurs dans ce qu'on sait déjà faire.</div>
-        <div class="who">
-          <div class="n">Marie Larcher</div>
-          <div class="r">DG, Maine Génie Élec — Le Mans</div>
-        </div>
-      </div>
-      <div class="quote-card">
-        <div class="q">Préparer la transmission tout en restant aux commandes au quotidien, c'est ce que Voltaria a rendu possible chez nous.</div>
-        <div class="who">
-          <div class="n">Pierre Vasseur</div>
-          <div class="r">Fondateur, Vendée Énergie — La Roche-sur-Yon</div>
-        </div>
+    <div class="featured-quote">
+      <div class="q">Préparer la transmission tout en continuant à piloter ICR au quotidien, accéder à des moyens que nous n'aurions jamais mobilisés seuls, et préserver l'ADN qui fait notre force terrain — c'est ce que Voltaria a rendu possible.</div>
+      <div class="who">
+        <div class="n"><span class="placeholder">XXX</span></div>
+        <div class="r">PDG · ICR Télécom · Limours</div>
       </div>
     </div>
   </div>
