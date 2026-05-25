@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Voltaria — Bento du génie électrique français</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* V6 — Bento: modular tiles, deep cobalt accent, Apple Newsroom rhythm */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  :root {
+    --bg: #f5f5f7;
+    --paper: #ffffff;
+    --paper-2: #fafafc;
+    --line: #e4e4e9;
+    --ink: #0e1230;
+    --ink-2: #2c2f55;
+    --ink-3: #65689a;
+    --cobalt: #2547d6;
+    --cobalt-deep: #1d3aac;
+    --cobalt-soft: #e7eaff;
+    --gold: #d4a256;
+  }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.55;
+    font-weight: 400;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  .container { max-width: 1320px; margin: 0 auto; padding: 0 24px; }
+
+  /* Nav */
+  .nav {
+    position: fixed; top: 16px; left: 16px; right: 16px;
+    z-index: 80;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    transition: box-shadow 0.3s ease, background 0.3s ease;
+  }
+  .nav.scrolled { background: rgba(255,255,255,0.96); box-shadow: 0 8px 24px rgba(14,18,48,0.08); }
+  .nav .row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 20px 12px 24px;
+    max-width: 1320px; margin: 0 auto;
+  }
+  .logo {
+    font-size: 19px; font-weight: 700;
+    letter-spacing: -0.02em;
+    display: flex; align-items: center; gap: 10px;
+    color: var(--ink);
+  }
+  .logo svg { width: 22px; height: 22px; }
+  .logo svg path { fill: var(--cobalt); }
+  .nav ul { list-style: none; display: flex; gap: 28px; font-size: 13px; }
+  .nav ul a { color: var(--ink-2); font-weight: 500; transition: color 0.2s ease; }
+  .nav ul a:hover { color: var(--cobalt); }
+  .nav .cta {
+    background: var(--ink); color: #fff;
+    padding: 10px 20px; border-radius: 100px;
+    font-size: 13px; font-weight: 500;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .nav .cta:hover { background: var(--cobalt); transform: translateY(-1px); }
+  @media (max-width: 900px) { .nav ul { display: none; } }
+  @media (max-width: 600px) { .nav { left: 8px; right: 8px; top: 8px; } .nav .row { padding: 10px 14px 10px 18px; } }
+
+  /* Containers & grid base */
+  section.s { padding: 96px 0; }
+  section.s:first-of-type { padding-top: 120px; }
+
+  .bento {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 14px;
+  }
+  @media (max-width: 800px) { .bento { grid-template-columns: repeat(6, 1fr); } }
+
+  .tile {
+    background: var(--paper);
+    border-radius: 24px;
+    padding: 36px;
+    display: flex; flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.35s cubic-bezier(.2,.8,.2,1), box-shadow 0.35s ease;
+  }
+  .tile:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(14,18,48,0.08); }
+  .tile.dark { background: var(--ink); color: #fff; }
+  .tile.cobalt { background: var(--cobalt); color: #fff; }
+  .tile.cobalt-soft { background: var(--cobalt-soft); }
+  .tile.flat { padding: 0; overflow: hidden; }
+  .tile.link { cursor: pointer; }
+
+  .tile .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 16px;
+  }
+  .tile.dark .label, .tile.cobalt .label { color: rgba(255,255,255,0.7); }
+  .tile.cobalt-soft .label { color: var(--cobalt-deep); }
+
+  /* Hero — 12-col bento */
+  .hero { padding-top: 110px; }
+  .hero .bento {
+    grid-auto-rows: minmax(170px, auto);
+  }
+  .hero-headline { grid-column: span 8; grid-row: span 2; justify-content: space-between; }
+  .hero-headline h1 {
+    font-size: clamp(40px, 5.8vw, 80px);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--ink);
+    margin-top: 32px;
+  }
+  .hero-headline h1 .accent { color: var(--cobalt); }
+  .hero-headline .sub {
+    color: var(--ink-2);
+    font-size: 17px;
+    line-height: 1.6;
+    max-width: 540px;
+    margin-top: 24px;
+    font-weight: 300;
+  }
+  .hero-headline .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .hero-photo { grid-column: span 4; grid-row: span 2; padding: 0; }
+  .hero-photo .img {
+    width: 100%; height: 100%;
+    background-image: url('https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1600&q=85');
+    background-size: cover; background-position: center;
+    transition: transform 0.6s ease;
+    min-height: 320px;
+  }
+  .hero-photo:hover .img { transform: scale(1.04); }
+  .hero-cta { grid-column: span 5; }
+  .hero-cta .row-cta { display: flex; gap: 10px; flex-wrap: wrap; margin-top: auto; }
+  .btn {
+    padding: 14px 22px; border-radius: 100px;
+    font-size: 13px; font-weight: 500;
+    border: 1px solid transparent;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.2s ease;
+  }
+  .btn-primary { background: var(--ink); color: #fff; }
+  .btn-primary:hover { background: var(--cobalt); transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+  .btn-ghost:hover { border-color: var(--ink); }
+  .hero-cta h3 {
+    font-size: 22px; font-weight: 600; letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+  .hero-cta p { color: var(--ink-3); font-size: 14px; max-width: 340px; }
+
+  .hero-stat-1 { grid-column: span 4; justify-content: space-between; }
+  .hero-stat-2 { grid-column: span 3; justify-content: space-between; }
+  .stat-v {
+    font-size: clamp(48px, 5vw, 72px);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--ink);
+    margin-top: 8px;
+  }
+  .tile.cobalt .stat-v, .tile.dark .stat-v { color: #fff; }
+  .stat-v sup { font-size: 0.42em; vertical-align: top; opacity: 0.6; font-weight: 500; margin-left: 2px; }
+  .stat-l { font-size: 13px; color: var(--ink-3); margin-top: 14px; max-width: 200px; }
+  .tile.dark .stat-l, .tile.cobalt .stat-l { color: rgba(255,255,255,0.7); }
+
+  /* Mobile bento collapse */
+  @media (max-width: 800px) {
+    .hero-headline { grid-column: span 6; grid-row: span 1; }
+    .hero-photo { grid-column: span 6; grid-row: span 1; aspect-ratio: 4/3; }
+    .hero-cta { grid-column: span 6; }
+    .hero-stat-1, .hero-stat-2 { grid-column: span 3; }
+  }
+
+  /* Section header */
+  .sec-head { padding: 0 0 32px; display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; }
+  .sec-head .left { max-width: 720px; }
+  .sec-head .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--cobalt); margin-bottom: 14px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .sec-head .eyebrow::before { content: ""; width: 24px; height: 1px; background: var(--cobalt); }
+  .sec-head h2 {
+    font-size: clamp(32px, 4.2vw, 56px);
+    font-weight: 600; letter-spacing: -0.025em;
+    line-height: 1.05;
+    color: var(--ink);
+  }
+  .sec-head h2 .accent { color: var(--cobalt); }
+  .sec-head .right { color: var(--ink-3); font-size: 15px; max-width: 360px; }
+
+  /* Histoire bento — narrative tile + founders */
+  .histoire-1 { grid-column: span 8; grid-row: span 2; }
+  .histoire-1 h2 {
+    font-size: clamp(28px, 3vw, 44px);
+    font-weight: 600; letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 24px;
+  }
+  .histoire-1 h2 .accent { color: var(--cobalt); }
+  .histoire-1 p { color: var(--ink-2); font-size: 15px; line-height: 1.65; font-weight: 400; margin-bottom: 14px; max-width: 540px; }
+  .histoire-1 .pillars { margin-top: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 600px) { .histoire-1 .pillars { grid-template-columns: 1fr; } }
+  .histoire-1 .pill {
+    background: var(--cobalt-soft);
+    border-radius: 14px;
+    padding: 16px 18px;
+  }
+  .histoire-1 .pill .n {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--cobalt-deep);
+    letter-spacing: 0.16em; text-transform: uppercase;
+  }
+  .histoire-1 .pill .t { font-size: 14px; font-weight: 600; margin-top: 6px; color: var(--ink); }
+
+  .histoire-fdrs { grid-column: span 4; grid-row: span 2; padding: 24px; }
+  .histoire-fdrs .label { margin-bottom: 16px; }
+  .fdr-stack { display: grid; gap: 12px; }
+  .fdr {
+    display: grid; grid-template-columns: 88px 1fr;
+    gap: 16px;
+    background: var(--paper-2);
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: background 0.25s ease;
+  }
+  .fdr:hover { background: var(--cobalt-soft); }
+  .fdr .img {
+    aspect-ratio: 1;
+    background-size: cover; background-position: center top;
+    filter: grayscale(35%);
+    transition: filter 0.4s ease;
+  }
+  .fdr:hover .img { filter: grayscale(0%); }
+  .fdr .img.scott { background-image: url('img/scott.webp'); }
+  .fdr .img.ambroise { background-image: url('img/ambroise.webp'); }
+  .fdr .b { display: flex; flex-direction: column; justify-content: center; padding: 12px 16px 12px 0; }
+  .fdr .n { font-size: 16px; font-weight: 600; }
+  .fdr .r { font-size: 11px; color: var(--ink-3); margin-top: 2px; letter-spacing: 0.06em; text-transform: uppercase; }
+
+  @media (max-width: 800px) {
+    .histoire-1 { grid-column: span 6; grid-row: span 1; }
+    .histoire-fdrs { grid-column: span 6; grid-row: span 1; }
+  }
+
+  /* Réseau bento — 8 company tiles, mixed sizes */
+  .reseau-bento { grid-auto-rows: minmax(140px, auto); }
+  .biz-tile {
+    cursor: pointer;
+    display: flex; flex-direction: column; justify-content: space-between;
+    transition: transform 0.35s cubic-bezier(.2,.8,.2,1), box-shadow 0.35s ease, background 0.3s ease;
+  }
+  .biz-tile:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(14,18,48,0.08); background: var(--cobalt-soft); }
+  .biz-tile .mark {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.2em;
+    color: var(--cobalt-deep);
+    width: 48px; height: 48px;
+    background: var(--cobalt-soft);
+    border-radius: 12px;
+    display: grid; place-items: center;
+    margin-bottom: 0;
+  }
+  .biz-tile:hover .mark { background: var(--cobalt); color: #fff; }
+  .biz-tile .name { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; }
+  .biz-tile .city { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-3); letter-spacing: 0.14em; text-transform: uppercase; margin-top: 8px; }
+  .biz-1 { grid-column: span 5; grid-row: span 2; background: var(--cobalt); color: #fff; }
+  .biz-1:hover { background: var(--cobalt-deep); transform: translateY(-3px); }
+  .biz-1 .mark { background: rgba(255,255,255,0.18); color: #fff; }
+  .biz-1 .name { font-size: 32px; }
+  .biz-1 .city { color: rgba(255,255,255,0.7); }
+  .biz-2 { grid-column: span 4; }
+  .biz-3 { grid-column: span 3; }
+  .biz-4 { grid-column: span 4; }
+  .biz-5 { grid-column: span 3; }
+  .biz-6 { grid-column: span 5; background: var(--ink); color: #fff; }
+  .biz-6:hover { background: #050714; }
+  .biz-6 .mark { background: rgba(255,255,255,0.14); color: #fff; }
+  .biz-6 .name { color: #fff; }
+  .biz-6 .city { color: rgba(255,255,255,0.6); }
+  .biz-7 { grid-column: span 4; }
+  .biz-8 { grid-column: span 3; }
+  @media (max-width: 800px) {
+    .biz-1 { grid-column: span 6; }
+    .biz-2, .biz-3, .biz-4, .biz-5, .biz-6, .biz-7, .biz-8 { grid-column: span 3; grid-row: span 1; }
+  }
+
+  /* Paroles bento — 3 quote tiles + decorative */
+  .paroles-bento { grid-auto-rows: minmax(180px, auto); }
+  .q-tile {
+    display: flex; flex-direction: column;
+    grid-row: span 2;
+  }
+  .q-tile.q-1 { grid-column: span 4; }
+  .q-tile.q-2 { grid-column: span 4; }
+  .q-tile.q-3 { grid-column: span 4; }
+  .q-tile .q {
+    font-size: 18px; line-height: 1.5;
+    flex: 1;
+    color: var(--ink);
+    font-weight: 400;
+  }
+  .q-tile.dark .q { color: rgba(255,255,255,0.92); }
+  .q-tile .q::before { content: "❝ "; color: var(--cobalt); font-size: 24px; font-family: serif; vertical-align: -4px; }
+  .q-tile.dark .q::before { color: var(--cobalt-soft); }
+  .q-tile .who { margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--line); }
+  .q-tile.dark .who { border-top-color: rgba(255,255,255,0.18); }
+  .q-tile.cobalt .who { border-top-color: rgba(255,255,255,0.24); }
+  .q-tile.cobalt .q { color: #fff; }
+  .q-tile.cobalt .q::before { color: rgba(255,255,255,0.5); }
+  .q-tile .n { font-size: 14px; font-weight: 600; }
+  .q-tile.dark .n, .q-tile.cobalt .n { color: #fff; }
+  .q-tile .r { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-3); margin-top: 4px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .q-tile.dark .r, .q-tile.cobalt .r { color: rgba(255,255,255,0.65); }
+  @media (max-width: 800px) {
+    .q-tile.q-1, .q-tile.q-2, .q-tile.q-3 { grid-column: span 6; grid-row: span 1; }
+  }
+
+  /* Chiffres bento — 4 stat tiles + big one */
+  .chiffres-bento { grid-auto-rows: minmax(160px, auto); }
+  .chiffres-bento .stat-big { grid-column: span 6; grid-row: span 2; background: var(--ink); color: #fff; justify-content: space-between; }
+  .chiffres-bento .stat-big .stat-v { font-size: clamp(72px, 9vw, 144px); color: var(--cobalt-soft); }
+  .chiffres-bento .stat-big .stat-l { color: rgba(255,255,255,0.7); font-size: 14px; max-width: 280px; }
+  .chiffres-bento .stat-big .label { color: rgba(255,255,255,0.5); }
+  .chiffres-bento .stat-card { grid-column: span 3; justify-content: space-between; }
+  .chiffres-bento .stat-card.cobalt .stat-l { color: rgba(255,255,255,0.8); }
+  .chiffres-bento .stat-card.cobalt .label { color: rgba(255,255,255,0.75); }
+  @media (max-width: 800px) {
+    .chiffres-bento .stat-big { grid-column: span 6; }
+    .chiffres-bento .stat-card { grid-column: span 3; }
+  }
+
+  /* Valeurs bento */
+  .valeurs-bento { grid-auto-rows: minmax(180px, auto); }
+  .val-tile { grid-column: span 3; }
+  .val-tile.featured { grid-column: span 6; grid-row: span 2; background: var(--cobalt); color: #fff; }
+  .val-tile .icon {
+    width: 44px; height: 44px;
+    background: var(--cobalt-soft);
+    color: var(--cobalt-deep);
+    border-radius: 12px;
+    display: grid; place-items: center;
+    margin-bottom: 20px;
+  }
+  .val-tile.featured .icon { background: rgba(255,255,255,0.18); color: #fff; }
+  .val-tile .icon svg { width: 22px; height: 22px; }
+  .val-tile .icon svg path, .val-tile .icon svg circle { stroke: currentColor; stroke-width: 1.6; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .val-tile h3 { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 10px; }
+  .val-tile.featured h3 { font-size: 32px; }
+  .val-tile p { font-size: 14px; color: var(--ink-3); line-height: 1.55; }
+  .val-tile.featured p { color: rgba(255,255,255,0.85); font-size: 16px; max-width: 380px; }
+  @media (max-width: 800px) {
+    .val-tile.featured { grid-column: span 6; grid-row: span 1; }
+    .val-tile { grid-column: span 3; }
+  }
+
+  /* Rejoindre bento — 2 large path tiles */
+  .rejoindre-bento { grid-auto-rows: minmax(280px, auto); }
+  .path-tile {
+    grid-column: span 6;
+    cursor: pointer;
+    justify-content: space-between;
+    transition: transform 0.35s cubic-bezier(.2,.8,.2,1), background 0.3s ease;
+  }
+  .path-tile:hover { transform: translateY(-3px); }
+  .path-tile.cobalt:hover { background: var(--cobalt-deep); }
+  .path-tile .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .path-tile.cobalt .num, .path-tile.dark .num { color: rgba(255,255,255,0.7); }
+  .path-tile .l {
+    font-size: clamp(28px, 3.4vw, 44px);
+    font-weight: 600; letter-spacing: -0.02em;
+    line-height: 1.05; margin-top: 16px;
+    color: var(--ink);
+  }
+  .path-tile.cobalt .l, .path-tile.dark .l { color: #fff; }
+  .path-tile .s {
+    color: var(--ink-3); font-size: 15px;
+    margin-top: 20px; line-height: 1.6; max-width: 440px;
+  }
+  .path-tile.cobalt .s, .path-tile.dark .s { color: rgba(255,255,255,0.75); }
+  .path-tile .arr {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
+    margin-top: 28px; padding-top: 18px;
+    border-top: 1px solid var(--line);
+    color: var(--cobalt);
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .path-tile.cobalt .arr, .path-tile.dark .arr { color: var(--cobalt-soft); border-top-color: rgba(255,255,255,0.2); }
+  @media (max-width: 800px) {
+    .path-tile { grid-column: span 6; }
+  }
+
+  /* Footer */
+  footer.foot { background: var(--ink); color: rgba(255,255,255,0.6); padding: 64px 0 32px; margin: 32px 16px 16px; border-radius: 24px; }
+  @media (max-width: 600px) { footer.foot { margin: 16px 8px 8px; } }
+  .foot-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 32px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  @media (max-width: 800px) { .foot-grid { grid-template-columns: 1fr 1fr; } }
+  .foot-grid h5 { color: #fff; font-size: 12px; font-weight: 600; margin-bottom: 16px; letter-spacing: 0.14em; text-transform: uppercase; }
+  .foot-grid ul { list-style: none; }
+  .foot-grid li { font-size: 13px; margin-bottom: 10px; }
+  .foot-grid a:hover { color: var(--cobalt-soft); }
+  .foot-grid .b-name { color: #fff; font-size: 22px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .foot-grid .b-name svg { width: 22px; height: 22px; }
+  .foot-grid .b-name svg path { fill: var(--cobalt-soft); }
+  .foot-grid p { font-size: 13px; line-height: 1.65; max-width: 340px; }
+  .foot-bottom { padding-top: 24px; display: flex; justify-content: space-between; gap: 12px; font-size: 11px; flex-wrap: wrap; letter-spacing: 0.04em; font-family: 'JetBrains Mono', monospace; }
+
+  /* Floating WhatsApp */
+  .wa-fab {
+    position: fixed; bottom: 24px; right: 24px;
+    z-index: 90;
+    width: 56px; height: 56px;
+    background: #25D366;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    box-shadow: 0 6px 24px rgba(37,211,102,0.35), 0 2px 8px rgba(14,18,48,0.15);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .wa-fab:hover { transform: translateY(-2px) scale(1.05); box-shadow: 0 12px 32px rgba(37,211,102,0.5), 0 4px 12px rgba(14,18,48,0.2); }
+  .wa-fab svg { width: 28px; height: 28px; fill: #fff; }
+  .wa-fab .tooltip {
+    position: absolute; right: calc(100% + 12px); top: 50%; transform: translateY(-50%);
+    background: var(--ink); color: #fff;
+    padding: 8px 14px; border-radius: 100px;
+    font-size: 13px; font-weight: 500;
+    white-space: nowrap;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  .wa-fab:hover .tooltip { opacity: 1; }
+  @media (max-width: 600px) { .wa-fab { bottom: 16px; right: 16px; width: 52px; height: 52px; } .wa-fab .tooltip { display: none; } }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="row">
+    <a class="logo" href="#top">
+      <svg viewBox="0 0 32 32" fill="none" aria-hidden><path d="M6 3L20 3L14 14H24L10 29L14 18H4L6 3Z"/></svg>
+      Voltaria
+    </a>
+    <ul>
+      <li><a href="#histoire">L'histoire</a></li>
+      <li><a href="#reseau">Le réseau</a></li>
+      <li><a href="#paroles">Paroles</a></li>
+      <li><a href="#chiffres">Chiffres</a></li>
+      <li><a href="#valeurs">Valeurs</a></li>
+    </ul>
+    <a class="cta" href="#rejoindre">Prendre contact →</a>
+  </div>
+</header>
+
+<section id="top" class="s hero">
+  <div class="container">
+    <div class="bento">
+      <div class="tile hero-headline">
+        <div class="meta">Holding · Génie électrique français · Paris 2024</div>
+        <h1>Le prochain <span class="accent">fleuron</span> du génie électrique français.</h1>
+        <p class="sub">Un collectif de dirigeants qui s'associent pour bâtir, ensemble, le nouveau paysage du génie électrique français — sans renoncer à leur indépendance.</p>
+      </div>
+      <a class="tile hero-photo link" href="#histoire">
+        <div class="img"></div>
+      </a>
+      <div class="tile hero-cta">
+        <h3>Rejoindre l'aventure</h3>
+        <p>Que vous dirigiez une PME ou cherchiez une carrière dans la filière.</p>
+        <div class="row-cta">
+          <a class="btn btn-primary" href="#rejoindre">Rejoindre le groupe →</a>
+          <a class="btn btn-ghost" href="#rejoindre">Carrières</a>
+        </div>
+      </div>
+      <div class="tile cobalt hero-stat-1">
+        <div class="label">Sociétés du réseau</div>
+        <div>
+          <div class="stat-v">8</div>
+          <div class="stat-l">PME indépendantes fédérées en 12 mois</div>
+        </div>
+      </div>
+      <div class="tile hero-stat-2">
+        <div class="label">Collaborateurs</div>
+        <div>
+          <div class="stat-v">570<sup>+</sup></div>
+          <div class="stat-l">sur tout le territoire</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="histoire">
+  <div class="container">
+    <div class="sec-head">
+      <div class="left">
+        <div class="eyebrow">Notre histoire</div>
+        <h2>Vous <span class="accent">bâtissez</span>,<br/>nous <span class="accent">accélérons</span>.</h2>
+      </div>
+      <div class="right">Un projet entrepreneurial fondé en 2024 par Scott Gordon et Ambroise Nugues.</div>
+    </div>
+    <div class="bento" style="grid-auto-rows: minmax(170px, auto);">
+      <div class="tile histoire-1">
+        <h2>Bâtir un acteur de référence sans en effacer ni le nom, <span class="accent">ni l'âme</span>.</h2>
+        <p>Voltaria s'associe à des sociétés du génie électrique français engagées dans la transition énergétique.</p>
+        <p>Notre engagement est triple : chaque dirigeant rejoignant le groupe devient associé tout en restant indépendant, développe et pérennise sa société, et garde le temps de se dédier pleinement à son métier.</p>
+        <div class="pillars">
+          <div class="pill"><div class="n">01 · RH</div><div class="t">Recruter, former, fidéliser</div></div>
+          <div class="pill"><div class="n">02 · Finance</div><div class="t">Investir, structurer, sécuriser</div></div>
+          <div class="pill"><div class="n">03 · Commerce</div><div class="t">Comptes-clés & croissance externe</div></div>
+          <div class="pill"><div class="n">04 · Ingénierie</div><div class="t">Compétences techniques mutualisées</div></div>
+        </div>
+      </div>
+      <div class="tile histoire-fdrs">
+        <div class="label">— Les fondateurs —</div>
+        <div class="fdr-stack">
+          <div class="fdr">
+            <div class="img scott"></div>
+            <div class="b">
+              <div class="n">Scott Gordon</div>
+              <div class="r">Président · Co-fondateur</div>
+            </div>
+          </div>
+          <div class="fdr">
+            <div class="img ambroise"></div>
+            <div class="b">
+              <div class="n">Ambroise Nugues</div>
+              <div class="r">Directeur Général · Co-fondateur</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="reseau">
+  <div class="container">
+    <div class="sec-head">
+      <div class="left">
+        <div class="eyebrow">Le réseau</div>
+        <h2>Huit PME, <span class="accent">une</span><br/>même ambition.</h2>
+      </div>
+      <div class="right">Chaque entreprise garde son nom, son ancrage et ses équipes. Voltaria apporte ressources et mutualisation.</div>
+    </div>
+    <div class="bento reseau-bento">
+      <a class="tile biz-tile biz-1" href="#"><div class="mark">AE</div><div><div class="name">Aurel Électrique</div><div class="city">Lyon · Auvergne-Rhône-Alpes</div></div></a>
+      <a class="tile biz-tile biz-2" href="#"><div class="mark">VE</div><div><div class="name">Vendée Énergie</div><div class="city">La Roche-sur-Yon</div></div></a>
+      <a class="tile biz-tile biz-3" href="#"><div class="mark">MGE</div><div><div class="name">Maine Génie Élec</div><div class="city">Le Mans</div></div></a>
+      <a class="tile biz-tile biz-4" href="#"><div class="mark">BC</div><div><div class="name">Bordeaux Courants</div><div class="city">Bordeaux</div></div></a>
+      <a class="tile biz-tile biz-5" href="#"><div class="mark">TEP</div><div><div class="name">Toulouse ÉlecPro</div><div class="city">Toulouse</div></div></a>
+      <a class="tile biz-tile biz-6" href="#"><div class="mark">AÉ</div><div><div class="name">Atlantique Énergies</div><div class="city">Nantes · Pays de la Loire</div></div></a>
+      <a class="tile biz-tile biz-7" href="#"><div class="mark">RE</div><div><div class="name">Rhin Électrique</div><div class="city">Strasbourg</div></div></a>
+      <a class="tile biz-tile biz-8" href="#"><div class="mark">NES</div><div><div class="name">Nord Énergie</div><div class="city">Lille</div></div></a>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="paroles">
+  <div class="container">
+    <div class="sec-head">
+      <div class="left">
+        <div class="eyebrow">Paroles d'associés</div>
+        <h2>Le mot<br/>des <span class="accent">dirigeants</span>.</h2>
+      </div>
+      <div class="right">Trois dirigeants qui ont rejoint le groupe partagent ce que cette association leur apporte.</div>
+    </div>
+    <div class="bento paroles-bento">
+      <div class="tile q-tile q-1">
+        <div class="q">Rejoindre Voltaria, c'était garder notre nom et nos équipes tout en accédant à des moyens que nous n'aurions jamais mobilisés seuls.</div>
+        <div class="who">
+          <div class="n">Jean Dubois</div>
+          <div class="r">PDG · Aurel Électrique · Lyon</div>
+        </div>
+      </div>
+      <div class="tile q-tile q-2 dark">
+        <div class="q">On ne nous demande pas de devenir une autre entreprise. On nous demande de devenir meilleurs dans ce qu'on sait déjà faire.</div>
+        <div class="who">
+          <div class="n">Marie Larcher</div>
+          <div class="r">DG · Maine Génie Élec · Le Mans</div>
+        </div>
+      </div>
+      <div class="tile q-tile q-3 cobalt">
+        <div class="q">Préparer la transmission tout en restant aux commandes au quotidien, c'est ce que Voltaria a rendu possible chez nous.</div>
+        <div class="who">
+          <div class="n">Pierre Vasseur</div>
+          <div class="r">Fondateur · Vendée Énergie</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="chiffres">
+  <div class="container">
+    <div class="sec-head">
+      <div class="left">
+        <div class="eyebrow">En quelques chiffres</div>
+        <h2>Un groupe en <span class="accent">pleine</span><br/>construction.</h2>
+      </div>
+    </div>
+    <div class="bento chiffres-bento">
+      <div class="tile stat-big">
+        <div class="label">Chiffre d'affaires consolidé</div>
+        <div>
+          <div class="stat-v">68<sup>M€</sup></div>
+          <div class="stat-l">cumulés sur l'exercice 2025 par les sociétés du groupe.</div>
+        </div>
+      </div>
+      <div class="tile cobalt stat-card">
+        <div class="label">Sociétés</div>
+        <div>
+          <div class="stat-v">8</div>
+          <div class="stat-l">PME du réseau</div>
+        </div>
+      </div>
+      <div class="tile stat-card">
+        <div class="label">Collaborateurs</div>
+        <div>
+          <div class="stat-v">570<sup>+</sup></div>
+          <div class="stat-l">sur tout le territoire</div>
+        </div>
+      </div>
+      <div class="tile stat-card">
+        <div class="label">Régions</div>
+        <div>
+          <div class="stat-v">12</div>
+          <div class="stat-l">de présence en France</div>
+        </div>
+      </div>
+      <div class="tile cobalt-soft stat-card">
+        <div class="label">Croissance attendue</div>
+        <div>
+          <div class="stat-v">+60<sup>%</sup></div>
+          <div class="stat-l">pour la filière d'ici 2030</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="valeurs">
+  <div class="container">
+    <div class="sec-head">
+      <div class="left">
+        <div class="eyebrow">Ce qui nous anime</div>
+        <h2>Les valeurs<br/>que nous <span class="accent">partageons</span>.</h2>
+      </div>
+    </div>
+    <div class="bento valeurs-bento">
+      <div class="tile val-tile featured">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3l9 4v6c0 5-4 8-9 8s-9-3-9-8V7l9-4z"/></svg></div>
+        <h3>Préserver</h3>
+        <p>Garder intacts l'ADN, les marques et les équipes qui font la singularité de chaque société. Notre engagement le plus fort.</p>
+      </div>
+      <div class="tile val-tile">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 12h7m0 0V5l8 8m-8 0v7"/></svg></div>
+        <h3>Fédérer</h3>
+        <p>Réunir les PME du génie électrique dans une communauté entrepreneuriale durable.</p>
+      </div>
+      <div class="tile val-tile">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-2 8 9-12h-7l2-8z"/></svg></div>
+        <h3>Accélérer</h3>
+        <p>Apporter aux dirigeants les ressources financières et humaines pour franchir un nouveau cap.</p>
+      </div>
+      <div class="tile val-tile">
+        <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></div>
+        <h3>Engagement</h3>
+        <p>Une vision long terme, sans logique de revente. Une trajectoire commune.</p>
+      </div>
+      <div class="tile val-tile">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></svg></div>
+        <h3>Transmission</h3>
+        <p>Préparer la suite, accompagner les fondateurs, transmettre les savoir-faire.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="rejoindre">
+  <div class="container">
+    <div class="sec-head">
+      <div class="left">
+        <div class="eyebrow">Nous rejoindre</div>
+        <h2>Deux façons de prendre<br/>part au <span class="accent">fleuron</span>.</h2>
+      </div>
+      <div class="right">Que vous dirigiez une PME ou que vous souhaitiez rejoindre nos équipes — un seul email, une réponse rapide.</div>
+    </div>
+    <div class="bento rejoindre-bento">
+      <a class="tile path-tile cobalt" href="mailto:contact@voltaria.eu">
+        <div>
+          <div class="num">01 · Dirigeants</div>
+          <div class="l">Transmettre ou accélérer sa PME</div>
+          <div class="s">Devenir associé sans renoncer à l'indépendance, développer et pérenniser sa société, se dédier pleinement à son métier. Un partenariat industriel long terme.</div>
+        </div>
+        <div class="arr">contact@voltaria.eu →</div>
+      </a>
+      <a class="tile path-tile dark" href="mailto:carrieres@voltaria.eu">
+        <div>
+          <div class="num">02 · Talents</div>
+          <div class="l">Rejoindre l'aventure</div>
+          <div class="s">Postes techniques, ingénierie, M&A, finance, opérations — à Paris ou en région auprès des entreprises du réseau.</div>
+        </div>
+        <div class="arr">carrieres@voltaria.eu →</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <div class="b-name">
+          <svg viewBox="0 0 32 32" fill="none" aria-hidden><path d="M6 3L20 3L14 14H24L10 29L14 18H4L6 3Z"/></svg>
+          Voltaria
+        </div>
+        <p>Le groupe qui fédère les PME françaises du génie électrique engagées dans la transition énergétique.</p>
+      </div>
+      <div>
+        <h5>Navigation</h5>
+        <ul><li><a href="#histoire">L'histoire</a></li><li><a href="#reseau">Le réseau</a></li><li><a href="#paroles">Paroles</a></li><li><a href="#chiffres">Chiffres</a></li><li><a href="#valeurs">Nos valeurs</a></li></ul>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <ul>
+          <li>16 avenue de Messine</li>
+          <li>75008 Paris</li>
+          <li><a href="mailto:contact@voltaria.eu">contact@voltaria.eu</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Suivez-nous</h5>
+        <ul><li><a href="#">LinkedIn</a></li></ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Voltaria — Tous droits réservés</span>
+      <span>v6 · BENTO</span>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/33769121388" target="_blank" rel="noopener" class="wa-fab" aria-label="Contacter Voltaria sur WhatsApp">
+  <span class="tooltip">+33 7 69 12 13 88</span>
+  <svg viewBox="0 0 24 24" aria-hidden><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+</a>
+
+<script>
+  (function () {
+    const nav = document.querySelector('.nav');
+    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+</script>
+
+</body>
+</html>

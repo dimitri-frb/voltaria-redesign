@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <style>
+    .bolt { fill: #0a1a35; }
+    @media (prefers-color-scheme: dark) { .bolt { fill: #00d4ff; } }
+  </style>
+  <path class="bolt" d="M6 3L20 3L14 14H24L10 29L14 18H4L6 3Z"/>
+</svg>
