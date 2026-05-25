@@ -116,6 +116,55 @@
   .v6 .preview .tiles > div:nth-child(3) { background: #0e1230; }
   .v6:hover { border-color: #2547d6; }
   .v6 .ref b { color: #2547d6; }
+  /* V7 — featured wide card spanning full row */
+  .v7 {
+    grid-column: 1 / -1;
+    min-height: 380px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    overflow: hidden;
+  }
+  @media (max-width: 980px) { .v7 { grid-template-columns: 1fr; } }
+  .v7 .preview {
+    flex: none;
+    background: linear-gradient(135deg, #ece9e0 0%, #d8d3c2 100%);
+    position: relative;
+    min-height: 280px;
+  }
+  .v7 .preview::after { background: none; }
+  .v7 .preview .arch {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(21,21,26,0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(21,21,26,0.06) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+  .v7 .preview .terra-bar {
+    position: absolute; top: 20px; left: 24px; right: 24px;
+    height: 1px; background: #b8533a;
+    box-shadow: 0 0 0 0;
+  }
+  .v7 .preview .terra-bar::before,
+  .v7 .preview .terra-bar::after {
+    content: ""; position: absolute; top: -3px;
+    width: 1px; height: 7px; background: #b8533a;
+  }
+  .v7 .preview .terra-bar::before { left: 0; }
+  .v7 .preview .terra-bar::after { right: 0; }
+  .v7 .preview .plate {
+    position: absolute; bottom: 24px; left: 24px; right: 24px;
+    padding: 14px 16px;
+    background: #f3f0e6;
+    border: 1px solid #15151a;
+    font-family: 'Inter', monospace;
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: #15151a;
+    display: flex; justify-content: space-between;
+  }
+  .v7 .preview .plate b { color: #b8533a; }
+  .v7 .meta-block { margin-top: 0; padding: 48px; display: flex; flex-direction: column; justify-content: center; background: #141414; }
+  .v7:hover { border-color: #b8533a; }
+  .v7 .ref b { color: #b8533a; }
   footer { margin-top: 64px; font-size: 12px; color: #555; display: flex; justify-content: space-between; }
   footer a { color: #888; text-decoration: none; }
   footer a:hover { color: #f1eee7; }
@@ -125,7 +174,7 @@
 <div class="wrap">
   <header>
     <div class="brand"><b>Voltaria</b> · Refonte du site</div>
-    <div class="meta">6 directions / 1 brief</div>
+    <div class="meta">7 directions / 1 brief</div>
   </header>
   <div>
     <h1>Trois pistes pour <em>repenser</em><br/>la présence en ligne de Voltaria.</h1>
@@ -191,6 +240,23 @@
         <h2>Bento modulaire</h2>
         <div class="ref">Apple Newsroom · <b>Cobalt #2547d6</b></div>
         <p>Grille de tuiles modulaires (12 colonnes), coins arrondis 24px, alternance de tuiles claires/foncées/cobalt. Information dense mais hiérarchisée. Hover lift, navigation flottante en pilule.</p>
+        <div class="arrow">→</div>
+      </div>
+    </a>
+    <a class="card v7" href="v7-architecture.html">
+      <div class="preview">
+        <div class="arch"></div>
+        <div class="terra-bar"></div>
+        <div class="plate">
+          <span>[ 07.00 / Architectonique ]</span>
+          <span><b>Rev. 03</b> · 2026</span>
+        </div>
+      </div>
+      <div class="meta-block">
+        <div class="num">DIRECTION 07 · MONUMENTALE</div>
+        <h2>Architectonique</h2>
+        <div class="ref">Tadao Ando / Louis Kahn · <b>Lin + terracotta</b></div>
+        <p>Le site lu comme un plan d'architecte. Lin (#ece9e0) + ink + terracotta (#b8533a). Bricolage Grotesque XXL pour le manifeste, JetBrains Mono pour toutes les annotations dimensionnelles. Marqueurs de sections en notation [ 01.00 ], dessin SVG technique en hero, réseau en <b style="color:#b8533a">plan masse</b> (8 lots sur une grille asymétrique avec cartouches), chiffres en <b style="color:#b8533a">fiche technique</b> (data sheet 04.01–04.05), valeurs en <b style="color:#b8533a">principes invariants</b> avec icônes architecturales, footer en cartouche de plan. Aucune autre version ne lui ressemble.</p>
         <div class="arrow">→</div>
       </div>
     </a>
