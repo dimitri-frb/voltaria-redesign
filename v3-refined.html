@@ -602,6 +602,87 @@
   }
   .wa-fab:hover .tooltip { opacity: 1; }
   @media (max-width: 600px) { .wa-fab { bottom: 16px; right: 16px; width: 52px; height: 52px; } .wa-fab .tooltip { display: none; } }
+
+  /* ===== Mobile responsive pass ===== */
+  @media (max-width: 700px) {
+    .container, .container-wide { padding: 0 20px; }
+    .nav .row { padding: 16px 20px; }
+
+    .hero { padding: 120px 0 56px; }
+    .hero h1 { font-size: clamp(40px, 11vw, 80px); margin-bottom: 32px; line-height: 1; }
+    .hero .eyebrow { margin-bottom: 24px; font-size: 10px; letter-spacing: 0.24em; }
+    .hero .grid-h { padding-top: 20px; gap: 24px; }
+    .hero .sub { font-size: 16px; }
+    .hero .scroll-note { margin-top: 40px; font-size: 10px; }
+
+    .hero-strip { margin-top: 36px; aspect-ratio: 4/3; }
+    .hero-strip .caption { bottom: 12px; left: 12px; padding: 8px 14px; gap: 10px; font-size: 11px; }
+    .hero-strip .caption b { font-size: 14px; }
+
+    section.s { padding: 80px 0; }
+    .h2 { font-size: clamp(30px, 8vw, 48px); }
+    .lede { font-size: 16px; margin-top: 16px; }
+
+    .histoire .grid { gap: 40px; }
+    .histoire .copy p { font-size: 16px; line-height: 1.75; margin-top: 18px; }
+    .histoire .pillars { margin-top: 32px; }
+    .histoire .pillar { grid-template-columns: 100px 1fr; gap: 16px; padding: 18px 0; }
+    .founders-sticky { position: static; top: auto; }
+
+    .num-grid { gap: 28px 0; }
+    .num-cell { padding: 0 14px; border-right: 1px solid var(--line); }
+    .num-cell:nth-child(2) { border-right: none; }
+    .num-cell .v { font-size: clamp(48px, 13vw, 88px); }
+    .num-cell .l { font-size: 12px; margin-top: 12px; max-width: 160px; }
+
+    .company-feature .info { padding: 28px 22px; }
+    .company-feature h3 { font-size: clamp(28px, 7vw, 40px); margin: 12px 0 18px; }
+    .company-feature .desc { font-size: 15px; margin-bottom: 28px; line-height: 1.65; }
+    .company-feature .stats > div { padding: 14px 14px; }
+    .company-feature .stats b { font-size: 22px; }
+    .company-feature .stats span { font-size: 11px; }
+    .company-feature .link { margin-top: 20px; }
+
+    .featured-quote { padding-top: 36px; margin-top: 48px; border-top-color: var(--line); }
+    .featured-quote .q { font-size: clamp(20px, 5.5vw, 32px); line-height: 1.35; }
+    .featured-quote .who { margin-top: 36px; padding-top: 18px; max-width: 320px; }
+    .featured-quote .who .n .placeholder { font-size: 14px; padding: 2px 10px; }
+    .featured-quote .who .n { font-size: 18px; }
+
+    .v-grid { gap: 0; }
+    .val { padding: 28px 22px; }
+    .val h3 { font-size: 22px; }
+
+    .rejoindre { padding: 96px 0; }
+    .path { padding: 36px 24px; }
+    .path .l { font-size: clamp(24px, 6vw, 32px); }
+    .path .s { font-size: 14px; margin-top: 14px; }
+
+    footer.foot { padding: 48px 0 28px; }
+    .foot-grid { padding-bottom: 36px; gap: 28px; }
+    .foot-grid .b-name { font-size: 22px; }
+    .foot-grid p { font-size: 13px; }
+    .foot-bottom { padding-top: 20px; font-size: 11px; }
+  }
+
+  @media (max-width: 420px) {
+    .container, .container-wide { padding: 0 16px; }
+    .nav .row { padding: 14px 16px; }
+    .logo { font-size: 22px; }
+
+    section.s { padding: 64px 0; }
+    .hero { padding: 100px 0 44px; }
+
+    .company-feature .info { padding: 22px 18px; }
+    .company-feature .stats > div { padding: 12px; }
+    .company-feature .stats b { font-size: 20px; }
+
+    .num-cell { padding: 0 8px; }
+    .num-cell .l { font-size: 11px; }
+
+    .val { padding: 24px 18px; }
+    .path { padding: 28px 20px; }
+  }
 </style>
 </head>
 <body>
