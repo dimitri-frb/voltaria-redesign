@@ -261,14 +261,31 @@
     background: var(--paper);
     border: 1px solid var(--line-strong);
   }
+  .company-feature + .company-feature { margin-top: 24px; }
   @media (max-width: 900px) { .company-feature { grid-template-columns: 1fr; } }
   .company-feature .photo {
     aspect-ratio: 4/3;
-    background-image: url('img/ICR-telecom.jpeg');
     background-size: cover; background-position: center;
     border-right: 1px solid var(--line-strong);
   }
-  @media (max-width: 900px) { .company-feature .photo { border-right: none; border-bottom: 1px solid var(--line-strong); aspect-ratio: 16/9; } }
+  .company-feature .photo.icr { background-image: url('img/ICR-telecom.jpeg'); }
+  .company-feature .photo.logo {
+    background-color: var(--bg-3);
+    background-image: url('img/at2s-logo.png');
+    background-size: 50% auto;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  /* Reverse layout — logo/photo on the right, info on the left */
+  .company-feature.reverse .photo {
+    order: 2;
+    border-right: none;
+    border-left: 1px solid var(--line-strong);
+  }
+  @media (max-width: 900px) {
+    .company-feature .photo { border-right: none; border-bottom: 1px solid var(--line-strong); aspect-ratio: 16/9; }
+    .company-feature.reverse .photo { order: 0; border-left: none; }
+  }
   .company-feature .info {
     padding: 48px 44px;
     display: flex; flex-direction: column; justify-content: center;
@@ -755,7 +772,7 @@
       <h2 class="h2">Un groupe en <em>pleine</em><br/>construction.</h2>
     </div>
     <div class="num-grid">
-      <div class="num-cell"><div class="v">1<sup>ère</sup></div><div class="l">Société rejointe · ICR Télécom</div></div>
+      <div class="num-cell"><div class="v">2</div><div class="l">Sociétés du réseau</div></div>
       <div class="num-cell"><div class="v">40</div><div class="l">Collaborateurs en Île-de-France</div></div>
       <div class="num-cell"><div class="v">3<sup>M€</sup></div><div class="l">Chiffre d'affaires</div></div>
       <div class="num-cell"><div class="v">1500<sup>+</sup></div><div class="l">Interventions par mois</div></div>
@@ -767,13 +784,13 @@
   <div class="container">
     <div class="head">
       <div>
-        <div class="eyebrow">Société du réseau</div>
-        <h2 class="h2">La première pierre<br/>du <em>fleuron</em>.</h2>
+        <div class="eyebrow">Sociétés du réseau</div>
+        <h2 class="h2">Les premières pierres<br/>du <em>fleuron</em>.</h2>
       </div>
-      <p class="lede">Voltaria s'associe à des PME établies, ancrées localement et reconnues dans leur métier. ICR Télécom est la première société à rejoindre le groupe.</p>
+      <p class="lede">Les premières sociétés à rejoindre le groupe partagent une même exigence et un ancrage territorial fort : ICR Télécom en Île-de-France, AT2S en Bretagne.</p>
     </div>
     <div class="company-feature">
-      <div class="photo" role="img" aria-label="Intervention sur le terrain · ICR Télécom"></div>
+      <div class="photo icr" role="img" aria-label="Intervention sur le terrain · ICR Télécom"></div>
       <div class="info">
         <div class="badge">01 · Limours · Île-de-France</div>
         <h3>ICR Télécom</h3>
@@ -785,6 +802,21 @@
           <div><b>2006</b><span>année de fondation</span></div>
         </div>
         <a class="link" href="https://icrtelecom.fr" target="_blank" rel="noopener">icrtelecom.fr →</a>
+      </div>
+    </div>
+    <div class="company-feature reverse">
+      <div class="photo logo" role="img" aria-label="Logo AT2S"></div>
+      <div class="info">
+        <div class="badge">02 · Questembert · Bretagne</div>
+        <h3>AT2S</h3>
+        <p class="desc">Intégrateur de solutions de sécurité électronique, AT2S installe et exploite depuis 2005 des systèmes d'alarme, de vidéosurveillance et de contrôle d'accès pour les collectivités, les entreprises et les sites sensibles.</p>
+        <div class="stats">
+          <div><b>2005</b><span>année de fondation</span></div>
+          <div><b>4</b><span>métiers de la sécurité</span></div>
+          <div><b>7<sup>+</sup></b><span>partenaires technologiques</span></div>
+          <div><b>Public</b><span>privé · sites sensibles</span></div>
+        </div>
+        <a class="link" href="https://at2s.net" target="_blank" rel="noopener">at2s.net →</a>
       </div>
     </div>
   </div>
